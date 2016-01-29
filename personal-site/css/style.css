@@ -1,0 +1,175 @@
+/* ---------- Define Basic Containers ---------- */
+
+body{
+	font-family: 'Open Sans', sans-serif;
+	background-color: #fff;
+	width: 100%;
+	height: auto;
+	left:-8px;
+	position: absolute;
+	top:-10px;
+	overflow: auto;
+}
+.container {
+	margin: auto;
+}
+header {
+	top: 0px;
+	text-align: center;
+	width: 100%;
+	padding: 120px 10px 10px 0px;
+	height: 400px;
+	background-image: url("../images/header-background.jpg");
+	background-size: 100%;
+	background-position: center;
+	box-sizing: border-box;
+}
+footer{
+	height: 80px;
+	background-color: black;
+	width: 100%;
+	text-align: center;
+	padding: 14px;
+	box-sizing: border-box;
+}
+
+/* ---------- Define Text Styles ---------- */
+
+*{
+	color: #161b1f;
+}
+header p, h6, h1{
+	color:#fff;
+	margin:5px;
+}
+h1 {
+	font-size: 38px;
+	font-weight: 300;
+	line-height: 40px;
+	margin-bottom:20px;
+}
+h2{
+	font-size: 34px;
+	font-weight: 300;
+	line-height: 40px;
+}
+h3{
+	font-size: 28px;
+	font-weight: 300;
+	line-height: 30px;
+	letter-spacing: .2em;
+}
+h4{
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 20px;
+}
+h5{
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 20px;
+}
+h6{
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	letter-spacing: 4px;
+}
+p{
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 20px;
+}
+ul{
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 20px;
+}
+
+h5 a{
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 20px;
+	text-decoration: none;
+	color: #2996cc;
+
+}
+footer p{
+	color: #fff;
+}
+hr{
+	width: 100%;
+	border-color: #ccc;
+}
+/* ---------- Define Nav Styles ---------- */
+.nav-bar{
+	min-height: 40px;
+	width: 1018px;
+	margin: auto;
+	margin-bottom:0px;
+	clear: both;
+	padding: 10px;
+	position: relative;
+	top:-120px;
+	box-sizing: border-box;
+}
+.nav-links-left{
+    float: left;
+    min-width: 240px;
+}
+.nav-links-right{
+    min-width: 240px;
+    position: relative;
+    float: right;
+
+}
+.nav-links-right img{
+	color: #fff;
+    margin-left:20px;
+
+}
+.nav-bar a {
+	text-decoration: none;
+	color: #fff;
+	margin: 0em 1em;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 20px;
+}
+.nav-bar a:hover {
+	color: #999;
+}
+.nav-bar li{
+	display: inline;
+	list-style: none;
+}
+
+/* ---------- Define Column Grid ---------- */
+
+.two-col-content{
+	width: 1018px;
+	min-height: 400px;
+	margin: auto;
+	padding:50px 0px;
+	clear: both;
+	box-sizing: border-box;
+	overflow: auto;
+}
+
+.two-col-left{
+	width: 498px;
+	margin-right: 10px;
+	position: relative;
+    float: left;
+    overflow: auto;
+
+}
+.two-col-right{
+	width: 498px;
+	margin-left: 10px;
+	position: relative;
+    float: left;
+    overflow: auto;
+
+}
+
