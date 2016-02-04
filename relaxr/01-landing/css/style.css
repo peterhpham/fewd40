@@ -50,9 +50,9 @@ body {
      font-size: 12px;
      line-height: 1.4;
      font-family: Helvetica, Arial, sans-serif;
-     /*background: url(../images/header_bg.jpg) no-repeat center top rgb(134,141,157);*/
      background-size: cover;
      font-family: 'Open Sans', sans-serif;
+     background-color: #ddd;
 }
 
 
@@ -63,23 +63,24 @@ body {
 /* Center the container */
 #container {
   width: 100%;
+  max-width: 1200px;
   margin: auto;
 /*  height: 500px;*/
 
 }
 
 header {
-  padding: 20px;
+  color: #fff;
+  padding: 20px 80px;
   text-align: center;
   background: url(../images/header_bg.jpg) no-repeat center top;
-/*  background-size: 50px 500px;*/
   height: 700px; 
 }
 
 footer {
   color: #606161;
   text-align: center;
-  margin: 30px auto;
+/*  margin: 30px auto;*/
   padding: 10px;
   background-color: #121212;
 }
@@ -89,11 +90,11 @@ footer {
 /*******************************************/
 
 h1 {
-  font-size: 24px;
+  font-size: 48px;
   font-weight: 800;
 }
 h2 {
-  font-size: 20px;
+  font-size: 40px;
   font-weight: 600;
   margin: 1em 0em;
 }
@@ -105,44 +106,108 @@ p{
   font-size: 13px;
   font-weight: 300px;
 }
+.content-wrapper{
+  max-width: 960px;
+  margin:auto;
+}
+button{
+  height: 60px;
+  width: 300px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 24px;
+}
+header button{
+  background-color: #f9e42e;
+  color: #033048;
+}
+.vert-center{
+  position: relative;
+  top: 140px;
+}
+
 #logo {
-  margin-top: 200px;
-  text-align: right;
+  margin-top: 20px;
+  text-align: left;
 }
-.benefits{
+main{
   background-color: #f0efef;
-  padding: 20px;
+  padding: 20px 80px;
+  color: #606161;
 }
-.benefits li{
+main li{
   margin: 0px 10px;
-  font-size: 13px;
+  font-size: 21px;
   font-weight: 300px;
+}
+main h2{
+  color: #033048;
+}
+main p{
+  font-size: 21px;
+}
+main .left-column{
+  margin-left: ;
+  width:60%;
+  max-width: 600px;
+}
+main li{
+  margin-top: 10px;
 }
 .testimonial{
   background: url(../images/testimonial_bg.jpg) no-repeat center;
-  padding: auto;
-  min-height: 300px;
+  height: 394px;
+/*  height: auto;*/
   text-align: center;
+  color: #fff;
 }
-.testimonial>h3{
-  color:#fff;
+.testimonial>.center-quote{
+  height:inherit;
+  padding: 50px;
+  margin: auto;
+  width: 80%;
+  max-width: 600px;
+}
+.testimonial h3{
   font-size: 18px;
   font-weight: 600;
 }
-.testimonial blockquote{
+.testimonial p{
+  font-size: 36px;
   font-weight: 300;
   font-style: italic;
   margin: auto;
-  color:#606161;
 }
+.signup-cta{
+  text-align: center;
+  width: 100%;
+  background-color: #f9e42e;
+  padding: 30px;
+}
+.signup-cta button{
+  background-color: #033048;
+  color: #fff;
+}
+
 footer{
-
+  width: 100%;
+  height: auto;
+  padding:60px;
+  background-color: #121211;
+  color: #fff;
 }
-footer>p {
-  font-size: 9px;
+footer p {
+  font-size: 16px;
   font-weight: 600;
+  margin: 20px 0px 20px 0px;
 }
-
+footer h1 {
+  color: #f9e42e;
+}
+footer img {
+  margin: 60px 20px 60px 20px;
+}
 
 
 
