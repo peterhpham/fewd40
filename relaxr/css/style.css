@@ -177,7 +177,11 @@ main li{
   font-size: 21px;
   font-weight: 300px;
 }
-
+.testimonial p{
+  font-size: 28px;
+  f
+  ont-weight: 600;
+}
 .testimonial h3{
   font-size: 18px;
   f
