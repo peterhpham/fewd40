@@ -397,3 +397,49 @@ button:hover{
 
 }
 
+
+/******************************************
+/* RESPONSIVE BREAKPOINTS
+/*******************************************/
+
+
+@media screen and (max-width: 768px){
+  nav{
+    background-color: black;
+    text-align: center;
+    height: 200px;
+  }
+  #nav-links{
+    text-align: center;
+    float: left;
+    padding: 0;
+    margin: 0 auto;
+  }
+  nav #logo h1{
+    width: auto;
+    color: red;
+  }
+  nav #logo{
+    margin: 0 auto;
+    float: right;
+    clear: both;
+  }
+
+  nav li{
+    display: inline-block;
+    font-size: 18px;
+    margin-left: 20px;
+  }
+
+  .left-column{
+    width: 100%;
+  }
+
+  .side-content{
+    visibility: hidden;
+  }
+
+}
+
+
+
