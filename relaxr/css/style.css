@@ -71,30 +71,59 @@ img {
 /* Primary Containers */
 
 header {
-  color: #fff;
   padding: 20px 60px;
   text-align: center;
 }
+
 header.homepage{
   background: url(../images/header_bg.jpg) no-repeat center top;
   background-size: cover;
   height: 700px; 
 }
+
 nav{
-  background-color: purple;
+  background-color: #033048;
   color: #fff;
   height: 120px;
   margin: 0 auto;
   width: 100%;
-  padding: 20px 60px;
+  padding: 10px 60px;
+  overflow: hidden;
+}
+
+/* Overlay nav for homepage */
+nav.homepage{
+  background-color: transparent;
+  float: left;
+  margin: 0 auto;
+}
+
+#logo {
+  text-align: left;
+  float: left;
+  width: auto;
+}
+
+#logo h1 {
+  color: #fff;
+  margin: 15px 0 0 0;
+}
+
+#nav-links {
+  text-align: right;
+  float: right;
+  padding: 0;
+  width: auto;
 }
 
 nav li{
   display: inline-block;
+  font-size: 24px;
+  margin-left: 20px;
 }
 
-main{
- color: #606161;
+main {
+  color: #606161;
   background-color: #f0efef;
   padding: 20px 60px;
 }
@@ -106,7 +135,7 @@ main{
   padding: 100px 20px;
   height: auto;
   text-align: center;
-  color: #fff;
+
 }
 
 footer{
@@ -117,25 +146,26 @@ footer{
   color: #fff;
   background-color: #121211;
 }
+
 footer li{
   margin: 0 10px;
   display: inline-block;
 }
+
 .inner-wrapper{
   max-width: 1200px;
 }
+
 .content-wrapper{
   max-width: 960px;
   margin:auto;
 }
-#logo {
-  margin-top: 20px;
-  text-align: left;
-}
+
 .vert-center{
   position: relative;
   top: 140px;
 }
+
 header .vert-center{
   margin: 0 auto;
   min-width: 200px
@@ -154,6 +184,11 @@ header .vert-center{
   padding: 30px;
 }
 
+/* Homepage text color override */
+.home-testimonial, .home-testimonial h3, nav, header.homepage h2{
+  color: #fff;
+}
+
 
 /******************************************
 /* Blog Styles
@@ -166,7 +201,7 @@ header .vert-center{
   margin: 0;
 }*/
 article{
-  margin-bottom: 20px;
+  margin: 20px 0 20px 0;
 }
 .side-content{
   margin-left: 1.5%;
@@ -198,20 +233,23 @@ h1 {
 }
 
 h2 {
-  font-size: 40px;
+  font-size: 36px;
   font-weight: 600;
-  margin: 1em 0em;
+  line-height: 1.3em;
 }
+
 h3 {
   font-size: 22px;
   font-weight: 600;
   margin: 1em 0em;
 }
+
 h4 {
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 600;
   margin: 1em 0em;
 }
+
 h5 {
   font-size: 18px;
   font-weight: 800;
@@ -263,18 +301,72 @@ main li{
 
 /* Blog Styles */
 
+.dropcap { 
+  float: left; 
+  color: #033048;; 
+  font-size: 80px; 
+  font-weight: 600;
+  line-height: 70px; 
+  padding-top: 4px; 
+  padding-right: 8px; 
+  /*padding-left: 2px; */
+}
+
 .side-content li{
-  margin: 0 0 5px 0px;
+  margin: 0 0 3px 0px;
   list-style: none;
   font-size: 18px;
 }
-.side-content ul{
+
+.side-content ul, .side-content h5{
+  margin: 0;
   padding: 0px;
 }
 
-.side-content p{
+.side-content p, .side-content h4{
   font-size: 15px
 }
+
+
+
+/* Link Styles */
+
+#logo a{
+  text-decoration: none;  
+}
+
+#nav-links a{
+  color: #f9e42e;
+  text-decoration: none;
+}
+
+#nav-links a:hover{
+  color: #fff;
+}
+
+nav.homepage #nav-links a{
+  color: #fff;
+  text-decoration: none;
+}
+
+nav.homepage #nav-links a:hover{
+  color: #f9e42e;
+  text-decoration: none;
+}
+
+.left-column a, .side-content a{
+  color: #033048;
+  text-decoration: none;
+}
+
+a:hover, .read-more a:hover{
+  color: #0998e5;
+}
+
+/*.read-more a:hover{
+  color: #0998e5;
+}*/
+
 
 /******************************************
 /* BUTTON STYLES
@@ -297,5 +389,11 @@ header button{
 .signup-cta button{
   color: #fff;
   background-color: #033048;
+}
+
+button:hover{
+  color: #033048;;
+  background-color: #fff;
+
 }
 
