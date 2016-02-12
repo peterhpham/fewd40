@@ -13,6 +13,14 @@
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,800' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css">
 		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			//On click, return coming-soon message
+			function comingSoonAlert(){
+				alert("We're Not Ready For Sign-Ups...Yet.");
+			}
+		</script>
+
 	</head>
 
 
@@ -28,7 +36,7 @@
 					</div>
 					<div id="nav-links">
 						<ul>
-							<li><a href="#">About</a></li>
+							<li><a href="index.html">About</a></li>
 							<li><a href="#">FAQ</a></li>
 							<li><a href="#">Team</a></li>
 							<li><a href="#">Contact Us</a></li>
@@ -43,9 +51,9 @@
 				<div class="content-wrapper">
 
 					
-					<div class="vert-center">
+					<div class="vert-center clearfix">
 						<h2>Get piece of mind with a single tap</h2>
-						<a href="index.html"><button>Get it Now</button></a>
+						<a href="#"><button onclick="comingSoonAlert()">Get it Now</button></a>
 					</div>
 
 
@@ -85,7 +93,7 @@
 
 
 			<section class="signup-cta">
-				<a href="index.html"><button>Sign Up Now!</button></a>
+				<a href="#"><button onclick="comingSoonAlert()">Sign Up Now!</button></a>
 			</section>
 
 

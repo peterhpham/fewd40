@@ -13,6 +13,14 @@
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,800' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css">
 		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			//On click, return coming-soon message
+			function comingSoonAlert(){
+				alert("We're Not Ready For Sign-Ups...Yet.");
+			}
+		</script>
+
 	</head>
 
 
@@ -28,7 +36,7 @@
 					</div>
 					<div id="nav-links">
 						<ul>
-							<li><a href="#">About</a></li>
+							<li><a href="index.html">About</a></li>
 							<li><a href="#">FAQ</a></li>
 							<li><a href="#">Team</a></li>
 							<li><a href="#">Contact Us</a></li>
@@ -54,10 +62,11 @@
 								<li><a href="#">Business tips</a></li>
 							</ul>
 						</div>
+
 						<div class="side-block">
 							<h5>About Relaxr</h5>
 							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia bibendum nulla sed consectetur.</p>
-							<a href="#"><h4>Learn more ></a></h4>
+							<h4><a href="#">Learn more ></a></h4>
 						</div>
 						<div class="side-block ad">
 							<a href="#"><img src="./images/ad-unit.png"></a>
@@ -73,7 +82,7 @@
 							<p><span class="dropcap">C</span>um sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius blandit sit amet non magna. Curabitur blandit tempus porttitor.
 
 Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-							<div class="read-more"><a href="#"><h4>Read more ></h4></a></div>
+							<div class="read-more"><h4><a href="#">Read more ></a></h4></div>
 							<hr>
 						</article>
 
@@ -83,7 +92,7 @@ Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibu
 							<p><span class="dropcap">C</span>um sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius blandit sit amet non magna. Curabitur blandit tempus porttitor.
 
 Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-							<div class="read-more"><a href="#"><h4>Read more ></h4></a></div>
+							<div class="read-more"><h4><a href="#">Read more ></a></h4></div>
 							<hr>
 						</article>
 					</div><!-- .blog-content -->
@@ -94,7 +103,7 @@ Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibu
 			
 
 			<section class="signup-cta">
-				<a href="index.html"><button>Sign Up Now!</button></a>
+				<a href="#"><button onclick="comingSoonAlert()">Sign Up Now!</button></a>
 			</section>
 
 

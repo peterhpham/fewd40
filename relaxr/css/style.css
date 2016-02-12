@@ -54,6 +54,7 @@ body {
      font-family: 'Open Sans', sans-serif;
      background-color: #ddd;
 }
+
 img {
   max-width: 100%;
 }
@@ -78,7 +79,8 @@ header {
 header.homepage{
   background: url(../images/header_bg.jpg) no-repeat center top;
   background-size: cover;
-  height: 700px; 
+  min-height: 500px;
+  height: auto;
 }
 
 nav{
@@ -96,6 +98,32 @@ nav.homepage{
   background-color: transparent;
   float: left;
   margin: 0 auto;
+}
+
+nav li{
+  display: inline-block;
+  font-size: 24px;
+  margin-left: 20px;
+}
+
+main {
+  color: #606161;
+  background-color: #f0efef;
+  padding: 20px 60px;
+}
+
+footer{
+  width: 100%;
+  height: auto;
+  text-align: center;
+  padding: 20px 0;
+  color: #fff;
+  background-color: #121211;
+}
+
+footer li{
+  margin: 0 10px;
+  display: inline-block;
 }
 
 #logo {
@@ -116,18 +144,6 @@ nav.homepage{
   width: auto;
 }
 
-nav li{
-  display: inline-block;
-  font-size: 24px;
-  margin-left: 20px;
-}
-
-main {
-  color: #606161;
-  background-color: #f0efef;
-  padding: 20px 60px;
-}
-
 .home-testimonial{
   background: url(../images/testimonial_bg.jpg) no-repeat center center;
   background-size: cover;
@@ -135,21 +151,6 @@ main {
   padding: 100px 20px;
   height: auto;
   text-align: center;
-
-}
-
-footer{
-  width: 100%;
-  height: auto;
-  text-align: center;
-  padding: 20px 0;
-  color: #fff;
-  background-color: #121211;
-}
-
-footer li{
-  margin: 0 10px;
-  display: inline-block;
 }
 
 .inner-wrapper{
@@ -163,7 +164,7 @@ footer li{
 
 .vert-center{
   position: relative;
-  top: 140px;
+  top: 100px;
 }
 
 header .vert-center{
@@ -194,21 +195,17 @@ header .vert-center{
 /* Blog Styles
 /*******************************************/
 
-/*.blog-content{
-  background-color: pink;
-  width: 75%;
-  max-width: 700px;
-  margin: 0;
-}*/
 article{
   margin: 20px 0 20px 0;
 }
+
 .side-content{
   margin-left: 1.5%;
   width: 25%;
   max-width: 250px;
   float: right;
 }
+
 .side-block{
   margin-bottom: 40px;
 }
@@ -222,7 +219,9 @@ article{
 /* Text Styles
 /*******************************************/
 
+
 /* Base Styles */
+
 h1, h2, h3, h4, h5 {
   color: #033048;
 }
@@ -276,6 +275,8 @@ footer h1{
   color: #f9e42e;
 }
 
+
+
 /* Home Page Styles */
 
 main p{
@@ -299,6 +300,8 @@ main li{
   font-weight: 600;
 }
 
+
+
 /* Blog Styles */
 
 .dropcap { 
@@ -309,7 +312,6 @@ main li{
   line-height: 70px; 
   padding-top: 4px; 
   padding-right: 8px; 
-  /*padding-left: 2px; */
 }
 
 .side-content li{
@@ -351,7 +353,6 @@ nav.homepage #nav-links a{
 
 nav.homepage #nav-links a:hover{
   color: #f9e42e;
-  text-decoration: none;
 }
 
 .left-column a, .side-content a{
@@ -359,13 +360,11 @@ nav.homepage #nav-links a:hover{
   text-decoration: none;
 }
 
-a:hover, .read-more a:hover{
+a:hover{
   color: #0998e5;
-}
+  /*color: #0998e5;*/
 
-/*.read-more a:hover{
-  color: #0998e5;
-}*/
+}
 
 
 /******************************************
@@ -404,39 +403,62 @@ button:hover{
 
 
 @media screen and (max-width: 768px){
+  
   nav{
-    background-color: black;
     text-align: center;
-    height: 200px;
-  }
-  #nav-links{
-    text-align: center;
-    float: left;
-    padding: 0;
-    margin: 0 auto;
-  }
-  nav #logo h1{
-    width: auto;
-    color: red;
-  }
-  nav #logo{
-    margin: 0 auto;
-    float: right;
-    clear: both;
+    min-height: 200px;
+    height: auto;
+    padding-bottom: 10px;
   }
 
   nav li{
     display: inline-block;
     font-size: 18px;
-    margin-left: 20px;
+    font-weight: 600;
+    margin: 5px 10px;
+  }
+
+  nav ul{
+    padding: 0 0 20px 0;
+  }
+
+  #nav-links{
+    text-align: center;
+    float: none;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  nav.homepage #nav-links a{
+    color: #f9e42e;
+    text-decoration: none;
+  }
+  
+  #logo{
+    text-align: center;
+    margin: 0 auto;
+    float: none;
+    clear: both;
+  }
+
+  .vert-center{
+    top: 20px;
+  }
+
+.side-content{
+    /*visibility: hidden;*/
+    height:0;
+    overflow: hidden;
+    z-index: -1;
   }
 
   .left-column{
     width: 100%;
   }
 
-  .side-content{
-    visibility: hidden;
+  h2 {
+    font-size: 28px;
+    line-height: 1.3em;
   }
 
 }
