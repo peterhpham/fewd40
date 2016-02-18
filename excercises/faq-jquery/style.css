@@ -1,0 +1,27 @@
+
+body{
+	padding:50px;
+	font-family: sans-serif;;
+
+}
+
+.container{
+	width: 800px;
+	margin: 0 auto;
+}
+
+article{
+	margin: 5px;
+}
+
+article p{
+	padding: 10px;
+	background-color: #ddd;
+}
+
+
+a{
+
+	text-decoration: none;
+	color: black;
+}

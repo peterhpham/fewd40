@@ -1,0 +1,17 @@
+body{
+	padding: 50px;
+}
+.center{
+	text-align: center;
+	min-width:200px;
+	margin:100 auto;
+}
+input{
+	padding:15px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+}
+button{
+	padding:4px 20px;
+
+}
