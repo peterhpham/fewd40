@@ -159,7 +159,7 @@ footer li{
 
 .content-wrapper{
   max-width: 960px;
-  margin:auto;
+  margin: auto;
 }
 
 .vert-center{
@@ -167,9 +167,8 @@ footer li{
   top: 100px;
 }
 
-header .vert-center{
-  margin: 0 auto;
-  min-width: 200px
+header.homepage div{
+  margin-top: 200px;
 }
 
 .left-column{
@@ -441,11 +440,11 @@ button:hover{
     clear: both;
   }
 
-  .vert-center{
-    top: 20px;
-  }
+header.homepage div{
+  margin: 0;
+}
 
-.side-content{
+  .side-content{
     /*visibility: hidden;*/
     height:0;
     overflow: hidden;
