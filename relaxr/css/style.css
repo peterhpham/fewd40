@@ -209,7 +209,8 @@ article{
   margin-bottom: 40px;
 }
 
-.read-more {
+.read-more,
+.read-less {
   text-align: right;
   margin: 30px 0 30px 0;
 }
@@ -439,10 +440,6 @@ button:hover{
     float: none;
     clear: both;
   }
-
-header.homepage div{
-  margin: 0;
-}
 
   .side-content{
     /*visibility: hidden;*/
