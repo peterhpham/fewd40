@@ -304,7 +304,8 @@ main li{
 
 /* Blog Styles */
 
-.dropcap { 
+
+article p:first-of-type::first-letter{ 
   float: left; 
   color: #033048;; 
   font-size: 80px; 
