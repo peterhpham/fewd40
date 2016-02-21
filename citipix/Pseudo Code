@@ -1,0 +1,34 @@
+Pseudo Code
+
+Page loads - basic image background displays
+User enters city names
+App checks if string has a match
+If city matches, display as background image
+
+
+
+Search:
+
+string is input
+
+Each city is a variable array
+	var = city1[], city2[], city3[]
+
+	each array stores acceptable tags and storage names.
+
+Search function
+
+	take user input
+	make sure it's a string
+
+	compare entry to each city string
+		search loop, where number of loops is equal to items in array
+
+	if match is found, stop loop
+	return city# match
+
+	parse image associated with city#
+
+	apply image to css
+
+
