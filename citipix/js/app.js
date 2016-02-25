@@ -1,12 +1,27 @@
 $(document).ready(function(){
 	
 	$('#upload-tool').hide();
+	$('#submit-btn').hide();
+	$('#city-type').focus();
 
 	// Prevent page reload upon submission
 	$("input:submit").click(function(event) {
 	  event.preventDefault();
 	});	
 
+
+
+
+	// Adds of array of city name alternates
+	// array[0] stores image location
+	var city1 = ['./images/nyc.jpg', 'newyork', 'newyorkcity', 'nyc', 'ny'];
+	var city2 = ['./images/la.jpg', 'losangeles', 'la', 'lax'];
+	var city3 = ['./images/sf.jpg','sf', 'sfo', 'sanfrancisco', 'sanfran', 'bayarea'];
+	var city4 = ['./images/sydney.jpg', 'sydney', 'syd'];
+	var city5 = ['./images/austin.jpg', 'austin', 'atx'];
+
+	// Create an index of all cities with images
+	var cityIndex = [city1, city2, city3, city4, city5];
 
 
 
@@ -27,7 +42,7 @@ $(document).ready(function(){
 				if (srchQry.trim() === checkCity[z]){
 
 					// Change background to matching city
-					$('body').css('background', 'url(' + checkCity[0] + ')');
+					$('body').css('background-image', 'url(' + checkCity[0] + ')');
 
 					// Close tool and reset inputs
 					$('#upload-tool').fadeOut();
@@ -37,26 +52,12 @@ $(document).ready(function(){
 		};
 
 		// Reset input field and reveal upload tool
+	 	var nameHint = $('#city-type').val();
 	 	$('#city-type').val('');
-	 	$('#upload-tool').fadeIn();
-
+	 	$('#new-city').val(nameHint);
+	 	$('#upload-tool').slideDown();
+	 	$('#new-city').focus();
 	});
-
-
-
-
-
-	// Adds of array of city name alternates
-	// array[0] stores image location
-	var city1 = ['./images/nyc.jpg', 'newyork', 'newyorkcity', 'nyc', 'ny'];
-	var city2 = ['./images/la.jpg', 'losangeles', 'la', 'lax'];
-	var city3 = ['./images/sf.jpg','sf', 'sfo', 'sanfrancisco', 'sanfran', 'bayarea'];
-	var city4 = ['./images/sydney.jpg', 'sydney', 'syd'];
-	var city5 = ['./images/austin.jpg', 'austin', 'atx'];
-
-	// Create an index of all cities with images
-	var cityIndex = [city1, city2, city3, city4, city5];
-
 
 
 
@@ -83,14 +84,10 @@ $(document).ready(function(){
 		cityIndex[i].splice(0,0,addImage);
 
 		//Close box and reset values
-		$('#upload-tool').fadeOut();
+		$('#upload-tool').slideUp();
 		$('#new-city').val('');
 		$('#new-image').val('');
-
+		$('#city-type').focus();
 	});
 
 });
-
-
-
-

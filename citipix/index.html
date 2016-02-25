@@ -7,44 +7,51 @@
 
 		<title>City Background</title>
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script type="text/javascript">$('#upload-tool').hide();$('#submit-btn').hide();</script>
+		<script type="text/javascript" src="./js/app.js"></script>
+
 		<!-- external CSS link -->
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,800' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="./css/style.css">
 
 	</head>
 	<body>
 		<header>
-			<div class="title">
-				<h1>CitiPix</h1>
-				<p>Your Cities, Your Pix</p>
-			</div>
-		</header>
-
-		<div class="container">
+			
 			<form>
 				<input type="text" id="city-type" placeholder="Enter a city name...">
 				<input type="submit" value="Update" id="submit-btn">
 			</form>
-		</div>
 
-		<div id="upload-tool">
-			<div><p>Can't find your city? Add it below...</p></div>
-			<div>
-				<form>
-					<input type="text" id="new-city" class="uploader" placeholder="City name">
-					<input type="text" id="new-image" class="uploader" placeholder="Image url">
-					<br />
-					<input type="submit" value="Upload" id="upload-btn">
-				</form>
 
+			<div id="upload-tool">
+				<div>
+					<p>Can't find your city? Add it below...</p>
+				</div>
+				<div>
+					<form>
+						<input type="text" id="new-city" class="uploader" placeholder="City name">
+						<input type="text" id="new-image" class="uploader" placeholder="Image url">
+						<br />
+						<input type="submit" value="Upload" id="upload-btn">
+					</form>
+
+				</div>
+			</div>
+
+		</header>
+		
+
+		<div class="container">
+			<div class="title">
+				<h1>CitiPix</h1>
+				<p>Your Cities, Your Pix</p>
 			</div>
 		</div>
-			
 
 
 	</body>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
-	<script type="text/javascript" src="./js/app.js"></script>
 
 </html>
