@@ -1,29 +1,45 @@
 $(document).ready(function(){
 	
+
 	$('#upload-tool').hide();
 	$('#submit-btn').hide();
 	$('#city-type').focus();
+
 
 	// Prevent page reload upon submission
 	$("input:submit").click(function(event) {
 	  event.preventDefault();
 	});	
+ 
 
-
-
-
-	// Adds of array of city name alternates
-	// array[0] stores image location
-	var city1 = ['./images/nyc.jpg', 'newyork', 'newyorkcity', 'nyc', 'ny'];
-	var city2 = ['./images/la.jpg', 'losangeles', 'la', 'lax'];
-	var city3 = ['./images/sf.jpg','sf', 'sfo', 'sanfrancisco', 'sanfran', 'bayarea'];
-	var city4 = ['./images/sydney.jpg', 'sydney', 'syd'];
-	var city5 = ['./images/austin.jpg', 'austin', 'atx'];
-
-	// Create an index of all cities with images
-	var cityIndex = [city1, city2, city3, city4, city5];
-
-
+	var cityObj = new Object();
+	var cityIndex = [
+		{
+			name : 'New York',
+			keywords : ['newyork', 'newyorkcity', 'nyc', 'ny'],
+			image : './images/nyc.jpg'
+		},
+		{
+			name : 'Los Angeles',
+			keywords : ['losangeles', 'la', 'lax'],
+			image :  './images/la.jpg'
+		},
+		{
+			name : 'San Francisco',
+			keywords : ['sf', 'sfo', 'sanfrancisco', 'sanfran', 'bayarea'],
+			image : './images/sf.jpg'
+		},
+		{
+			name : 'Sydney',
+			keywords : ['sydney', 'syd'],
+			image : './images/sydney.jpg'
+		},
+		{
+			name : 'Austin',
+			keywords : ['austin', 'atx'],
+			image : './images/austin.jpg'
+		}
+	];
 
 
 	$('#submit-btn').on('click', function(event){
@@ -34,15 +50,15 @@ $(document).ready(function(){
 		srchQry = srchQry.replace(/\s/g,'');
 
 		// Compare search input against index of cities
-		for ( i = 0; i < cityIndex.length; i++){
-			var checkCity = cityIndex[i];
+		for ( i=0; i<cityIndex.length; i++){
+			var checkKeywords = cityIndex[i].keywords;
 
-			for( z = 0; z <= checkCity.length; z++){
+			for( z=0 ; z<=checkKeywords.length; z++){
 
-				if (srchQry.trim() === checkCity[z]){
+				if (srchQry === checkKeywords[z]){
 
 					// Change background to matching city
-					$('body').css('background-image', 'url(' + checkCity[0] + ')');
+					$('body').css('background-image', 'url(' + cityIndex[i].image + ')');
 
 					// Close tool and reset inputs
 					$('#upload-tool').fadeOut();
@@ -54,34 +70,34 @@ $(document).ready(function(){
 		// Reset input field and reveal upload tool
 	 	var nameHint = $('#city-type').val();
 	 	$('#city-type').val('');
-	 	$('#new-city').val(nameHint);
 	 	$('#upload-tool').slideDown();
-	 	$('#new-city').focus();
+	 	$('#new-city').val(nameHint)
+			.focus();
 	});
-
-
 
 
 	// Allows user to input new city and image
 	$('#upload-btn').on('click', function(){
 
+		console.log(cityIndex);
 		// Add new city to cityIndex array
 		var i = cityIndex.length;
-		cityIndex.push('city' + i);
+		cityIndex.push(cityObj);
 
 		//Capture new city name
-		//then parse into array split by comma, remove spaces 
 		var addCity = $('#new-city').val();
-		addCity = String(addCity).toLowerCase();
-		addCity = addCity.replace(/\s/g,'').split(',');
+		addCity = String(addCity).toLowerCase();	//lowercase stringify
+		addCity = addCity.replace(/\s/g,'')			//regExp to remove spaces
+			.split(',');									
 
 		//Capture new image path
 		var addImage = $('#new-image').val();
 		addImage = String(addImage);
 
-		//Assign name and image path to new array object
-		cityIndex[i] = addCity;
-		cityIndex[i].splice(0,0,addImage);
+		//Assign values to new city object
+		cityIndex[i].name = addCity[0];
+		cityIndex[i].keywords = addCity;
+		cityIndex[i].image = addImage;
 
 		//Close box and reset values
 		$('#upload-tool').slideUp();
