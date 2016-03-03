@@ -1,48 +1,39 @@
 $(document).ready(function(){
 	
 
-	$('#upload-tool').hide();
-	$('#submit-btn').hide();
-	$('#city-type').focus();
-
-
 	// Prevent page reload upon submission
 	$("input:submit").click(function(event) {
 	  event.preventDefault();
 	});	
- 
+
+
+	$('#upload-tool').hide();
+	$('#submit-btn').hide();
+	$('#city-type').focus();
 
 	var cityObj = new Object();
-	var cityIndex = [
-		{
-			name : 'New York',
-			keywords : ['newyork', 'newyorkcity', 'nyc', 'ny'],
-			image : './images/nyc.jpg'
-		},
-		{
-			name : 'Los Angeles',
-			keywords : ['losangeles', 'la', 'lax'],
-			image :  './images/la.jpg'
-		},
-		{
-			name : 'San Francisco',
-			keywords : ['sf', 'sfo', 'sanfrancisco', 'sanfran', 'bayarea'],
-			image : './images/sf.jpg'
-		},
-		{
-			name : 'Sydney',
-			keywords : ['sydney', 'syd'],
-			image : './images/sydney.jpg'
-		},
-		{
-			name : 'Austin',
-			keywords : ['austin', 'atx'],
-			image : './images/austin.jpg'
-		}
-	];
 
 
-	$('#submit-btn').on('click', function(event){
+
+
+	// Build dropdown menu from array values
+	var citySelectOptions = ["NYC", "SF", "LA", "ATX", "SYD"];
+	for ( i=0; i<citySelectOptions.length; i++){
+		console.log(citySelectOptions[i]);
+		$('#city-select').append('<option>'+citySelectOptions[i]+'</option>');
+	};
+
+	// Change background image based on selection
+	$('#city-select').on('change', function(){
+		var imgName = $('#city-select').val().toLowerCase();
+		$('body').css('background-image', 'url(./images/' + imgName + '.jpg)');
+	});
+
+
+
+
+	// Primary search function
+	$('#submit-btn').on('click', function(){
 
 		// Assign search input to var as a formatted string
 		var srchQry = $('#city-type').val();
@@ -71,9 +62,10 @@ $(document).ready(function(){
 	 	var nameHint = $('#city-type').val();
 	 	$('#city-type').val('');
 	 	$('#upload-tool').slideDown();
-	 	$('#new-city').val(nameHint)
-			.focus();
+	 	$('#new-city').val(nameHint).focus();
 	});
+
+
 
 
 	// Allows user to input new city and image

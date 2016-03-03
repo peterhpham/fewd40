@@ -57,6 +57,9 @@ body {
   -o-background-size: cover;
   background-size: cover;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 
@@ -66,14 +69,15 @@ body {
 
 /* Center the container */
 .container {
-	max-width: 600px;
   width: 100%;
-	margin: auto;
-  padding-top: 10em;
+  flex-grow: 1;
+  display: flex;
+  min-height: 80vh;
 }
 
 header {
   background: rgba(0,0,0,.2);
+  margin-bottom: auto;
 }
 
 header > form {
@@ -82,7 +86,7 @@ header > form {
 }
 
 .title {
-  margin-top: 140px;
+  margin: auto;
   text-align: center;
   color: #fff;
   font-size: 10em;
@@ -96,13 +100,12 @@ header > form {
   font-weight: normal;
 }
 
-#city-type {
+#city-type,
+#city-select {
   font-size: 1.4em;
   border: none;
   padding: 0px 30px;
   display: inline-block;
-  width: 40%;
-  min-width: 300px;
   margin: 20px 24px;
   height: 50px;
   background-color: #333;
@@ -110,8 +113,16 @@ header > form {
   vertical-align: middle;
   box-shadow: #111 0 0 20px;
   border-radius: 4px;
-
 }
+#city-type {
+  width: 40%;
+  min-width: 300px;
+}
+#city-select {
+  min-width: 200px;
+  color: #aaa;
+}
+
 #submit-btn,
 #upload-btn {
   background: #ffe500;
@@ -176,4 +187,33 @@ header > form {
   border-radius: 4px;
 }
 
+.img-gal {
+  width: 100px;
+  height: 100px;
+  background: no-repeat center center fixed;
+  display: inline-block;
+  background-color: red;
+  margin: 10px;
+}
 
+#menu{
+  width: 100%;
+  height:auto;
+  background: rgba(0,0,0,.5);
+  float: left;
+  color: #fff;
+  padding: 100px;
+}
+#menu-select{
+  width: 36px;
+  height:36px;
+  background: red;
+  margin-left:20px;
+  float: left;
+}
+#menu-list{
+  width: 100%;
+}
+#menu-gallery{
+  width: 100%;
+}
