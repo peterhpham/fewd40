@@ -1,0 +1,12 @@
+When user clicks on gallery image,
+a box pops up with additional images,
+layout has small caption with project details
+
+Gallery has filter buttons,
+dynamically hides some project tiles,
+columns restack with what is still visible
+
+At mobile screen sizes,
+top nav links are hidden,
+icon will open large full screen nav box
+
