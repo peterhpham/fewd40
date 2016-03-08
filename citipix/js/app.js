@@ -63,6 +63,9 @@ $(document).ready(function(){
 	 	$('#city-type').val('');
 	 	$('#upload-tool').slideDown();
 	 	$('#new-city').val(nameHint).focus();
+
+		// $('#city-select option').attr('selected');
+
 	});
 
 
