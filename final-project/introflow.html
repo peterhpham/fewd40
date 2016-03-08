@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grid Games</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,800' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+	<div class="container">
+
+
+		<div id="welcome" class="menu">
+			<h1>GRID GAMES</h1>
+		</div>
+
+
+		<div id="intro" class="menu">
+			<h3>PICK A GAME</h3>
+			<ul>
+				<a href=""><li id="choose-tictac"><h1>tic-tac-toe</h1></li></a>
+				<a href=""><li id="choose-connect"><h1>connect four</h1></li></a>
+				<a href=""><li id="choose-checkers"><h1>checkers</h1></li></a>
+			</ul>
+		</div>
+
+
+		<div id="choose-players" class="menu">
+			<h3>HOW MANY PLAYERS?</h3>
+			<ul>
+				<a href=""><li id="one-player"><h1>one player</h1></li></a>
+				<a href=""><li id="two-player"><h1>two players</h1></li></a>
+			</ul>
+		</div>
+
+
+		<div id="name-players" class="menu">
+			<h3>FIRST PLAYER</h3>
+			<input type="text" placeholder="enter name"></input>
+			<h3>SECOND PLAYER</h3>
+			<input type="text" placeholder="enter name"></input>
+		</div>
+
+
+		<div class="board hide">
+			<div class="row">
+				<div id="a1" class="grid-square"></div>
+				<div id="a2" class="grid-square"></div>
+				<div id="a3" class="grid-square"></div>
+			</div>
+			<div class="row">
+				<div id="b1" class="grid-square"></div>
+				<div id="b2" class="grid-square"></div>
+				<div id="b3" class="grid-square"></div>
+			</div>
+			<div class="row">
+				<div id="c1" class="grid-square"></div>
+				<div id="c2" class="grid-square"></div>
+				<div id="c3" class="grid-square"></div>
+			</div>
+
+
+			<div id="name-players" class="menu">
+				<h3>FIRST PLAYER</h3>
+				<input type="text" placeholder="enter name"></input>
+				<h3>SECOND PLAYER</h3>
+				<input type="text" placeholder="enter name"></input>
+			</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="./js/jquery-2.1.4.min.js"></script> -->
+	<script type="text/javascript" src="./js/game.js"></script>
+		
+</body>
+</html>

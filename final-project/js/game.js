@@ -1,3 +1,13 @@
+$(document).ready(function(){
+	
+	// Prevent page reload upon submission
+	$('a').click(function(event) {
+	  event.preventDefault();
+	});
+});
+
+
+
 /*////////////////////////////
    Esablish Game Parameters
 ////////////////////////////*/
@@ -12,6 +22,57 @@ var x_axisValues = ['1','2','3','4','5','6','7','8','9','10'];
 var y_axisValues = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
 
 var currentPlayer = 'user';
+
+
+
+
+
+
+
+
+/*////////////////////////////
+   Initialization Flow
+////////////////////////////*/
+
+$('#welcome').delay(400).fadeIn(800).delay(800).fadeOut(800);
+$('#intro').delay(2800).fadeIn(800);
+
+
+
+$('#choose-tictac').on('click', function(){
+	$('#intro').delay(300).fadeOut(300);
+	// $('#choose-players').delay(600).fadeIn(300);
+	$('.board').delay(600).fadeIn(300);
+
+});
+
+$('#choose-connect').on('click', function(){
+	alert('Sorry, this game is not yet ready');
+	// $('#intro').delay(300).fadeOut(300);
+	// $('#choose-players').delay(600).fadeIn(300);
+});
+
+$('#choose-checkers').on('click', function(){
+	alert('Sorry, this game is not yet ready');
+	// $('#intro').delay(300).fadeOut(300);
+	// $('#choose-players').delay(600).fadeIn(300);
+});
+
+$('#one-player').on('click', function(){
+	$('#choose-players').delay(300).fadeOut(300);
+	$('#name-players').delay(600).fadeIn(300);
+});
+
+$('#two-player').on('click', function(){
+	alert('This feature is not yet ready');
+	// $('#choose-players').delay(300).fadeOut(300);
+	// $('#name-players').delay(600).fadeIn(300);
+});
+
+
+
+
+
 
 
 // Helpers //
@@ -117,7 +178,7 @@ $('div.grid-square').on('click', function(){
 
 	makeMove(currentPlayer,selection);
 	// Change turns
-	botChoice();
+	var timeoutID = window.setTimeout(botChoice, 600);
 });
 
 
