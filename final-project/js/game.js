@@ -130,34 +130,49 @@ gameboard.checkWin = function(player){
 	if (this.grid.a1 == player && this.grid.a2 == player && this.grid.a3 == player) {
 		// alert(player + ' is the winner');
 		$('.board').html("<h2>" + player + " is the winner</h2>");
+		restartGame();
 	};
 	if (this.grid.b1 == player && this.grid.b2 == player && this.grid.b3 == player) {
 		// alert(player + ' is the winner');
 		$('.board').html("<h2>" + player + " is the winner</h2>");
+		restartGame();
+
 	};
 	if (this.grid.c1 == player && this.grid.c2 == player && this.grid.c3 == player) {
 		// alert(player + ' is the winner');
 		$('.board').html("<h2>" + player + " is the winner</h2>");
+		restartGame();
+
 	};
 	if (this.grid.a1 == player && this.grid.b1 == player && this.grid.c1 == player) {
 		// alert(player + ' is the winner');
 		$('.board').html("<h2>" + player + " is the winner</h2>");
+		restartGame();
+
 	};
 	if (this.grid.a2 == player && this.grid.b2 == player && this.grid.c2 == player) {
 		// alert(player + ' is the winner');
 		$('.board').html("<h2>" + player + " is the winner</h2>");
+		restartGame();
+
 	};
 	if (this.grid.a3 == player && this.grid.b3 == player && this.grid.c3 == player) {
 		// alert(player + ' is the winner');
 		$('.board').html("<h2>" + player + " is the winner</h2>");
+		restartGame();
+
 	};
 	if (this.grid.a1 == player && this.grid.b2 == player && this.grid.c3 == player) {
 		// alert(player + ' is the winner');
 		$('.board').html("<h2>" + player + " is the winner</h2>");
+		restartGame();
+
 	};
 	if (this.grid.a3 == player && this.grid.b2 == player && this.grid.c1 == player) {
 		// alert(player + ' is the winner');
 		$('.board').html("<h2>" + player + " is the winner</h2>");
+		restartGame();
+
 	};
 	return false;
 };
@@ -203,13 +218,22 @@ var botChoice = function(){
 
 
 
-
+// Defines all actions that occur after a selection is made
 var makeMove = function(player,selection){
 
 	$('#'+selection).addClass(player+'-pick');
 	gameboard.grid[selection] = player;
 	gameboard.checkWin(player);
 	console.log(player + ' selected ' + selection);
+};
+
+
+
+var restartGame = function(){
+	gameboard.grid.map(function(){
+		return null;
+	})
+	console.log(gameboard.grid);
 };
 
 
