@@ -105,10 +105,8 @@ body{
     /*background-color: red;*/
 }
 
-.menu {
-	display: none;
-}
-.hide{
+.menu,
+.hide {
 	display: none;
 }
 

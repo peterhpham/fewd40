@@ -46,7 +46,7 @@
 		<div id="names-1" class="menu">
 			<form>
 				<h3>PLAYER 1</h3>
-				<input type="text" id="p1-name" placeholder="enter name" required>
+				<input type="text" id="p1-name" placeholder="enter name" required autofocus>
 				<input type="submit" id="submit-names" style="display:none">
 			</form>
 		</div>
@@ -54,7 +54,7 @@
 		<div id="names-2" class="menu">
 			<form>
 				<h3>PLAYER 1</h3>
-				<input type="text" id="p1-name" placeholder="enter name" required>
+				<input type="text" id="p1-name" placeholder="enter name" required autofocus>
 				<h3>PLAYER 2</h3>
 				<input type="text" id="p2-name" placeholder="enter name" required>
 				<input type="submit" id="submit-names" style="display:none">
@@ -85,10 +85,7 @@
 
 	<div class="container hud">
 		<div id="settings"><a href=""><img src="images/sprite-menu.svg" width="80%" height="80%"></a></div>
-		<div id="score" class="menu">
-			<h3>PLAYER 1: <span id="p1-score"></span></h3>
-			<h3>PLAYER 2: <span id="p2-score"></span></h3>
-		</div>
+		<div id="score" class="menu"></div>
 	</div>
 
 
@@ -104,7 +101,6 @@
 				<ul>
 					<a href=""><li id="replay-tictac"><h1>play again</h1></li></a>
 					<a href=""><li id="different-game"><h1>different game</h1></li></a>
-					<!-- <a href=""><li id="choose-checkers"><h1>change name</h1></li></a> -->
 				</ul>
 			</div>	
 

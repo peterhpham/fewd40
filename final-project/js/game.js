@@ -65,13 +65,14 @@ $('#names-1 :submit').on('click', function(){
 
 		player_1.name = $('#names-1 #p1-name').val().toLowerCase();
 		player_2.name = 'computer';
+		player_2.ai = true;
 		
 		$('#score').html("<h3>" + player_1.name + ": <span id=\"p1-score\"></span></h3>");
 		$('#score').append("<h3>" + player_2.name + ": <span id=\"p2-score\"></span></h3>");
 		updateScore();
 
 		$('#names-1').delay(200).fadeOut(200);
-		$('#score').delay(200).fadeIn(200);
+		$('#score').delay(400).fadeIn(200);
 		$('.board').delay(400).fadeIn(200);
 	};
 });
@@ -89,13 +90,14 @@ $('#names-2 :submit').on('click', function(){
 
 		player_1.name = $('#names-2 #p1-name').val().toLowerCase();
 		player_2.name = $('#names-2 #p2-name').val().toLowerCase();
+		player_2.ai = false;
 
 		$('#score').html("<h3>" + player_1.name + ": <span id=\"p1-score\"></span></h3>");
 		$('#score').append("<h3>" + player_2.name + ": <span id=\"p2-score\"></span></h3>");
 		updateScore();
 
 		$('#names-2').delay(200).fadeOut(200);
-		$('#score').delay(200).fadeIn(200);
+		$('#score').delay(400).fadeIn(200);
 		$('.board').delay(400).fadeIn(200);
 	};
 });
@@ -143,20 +145,6 @@ $('#settings a').on('click', function(){
 });
 
 
-// Game hover //
-// $('div.grid-square').on('mouseover', function(){
-// 	if ( gameboard.grid[ $(this).attr('id') ] == null ){
-// 		$( this ).addClass('hover');
-
-// 		$('div.grid-square').on('mouseout', function(){
-// 			$( this ).removeClass('hover');
-
-// 		});
-// 	};
-// });
-
-
-
 
 
 
@@ -199,6 +187,8 @@ var defineCols = 3;
 
 var x_axisValues = ['1','2','3','4','5','6','7','8','9','10'];
 var y_axisValues = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+
+
 
 
 
@@ -293,6 +283,8 @@ gameboard.checkWin = function( input ){
 			updateScore();
 		}
 	else {
+
+		changeTurn();
 		return false;
 	};
 };
@@ -320,14 +312,7 @@ First player selects a square
 		- if not, check if it's a tie
 			- if either, display dialog overlay
 	- move complete, next turn ready
-
-
-
 */
-
-
-
-
 
 
 
@@ -343,14 +328,14 @@ $('div.grid-square').on('click', function(){
 		
 		// Pass selection and player name into function
 		makeMove( currentPlayer , selectedSquare );
-		gameboard.checkWin( currentPlayer );
-		changeTurn();
+		gameboard.checkWin( currentPlayer )
 	};
 });
 
 
 
 function checkValid( check ){
+
 	if ( gameboard.grid[ check ] == null ){
 		// console.log("move is good");
 		return true;
@@ -362,29 +347,66 @@ function checkValid( check ){
 
 
 
+
+/*   Pseudo AI choice
+
+player 1 completes turn
+Run changeTurn() function
+
+Check if 2nd player is AI
+
+Check all grid spaces, compile list of available moves
+Store available spaces in array
+
+// Easy - random number (0 - array.length)
+// Medium - 
+// Hard - 
+
+A selection is generated
+	- check if it's already chosen
+		- if it is, block choice
+	- mark square with player choice
+	- check if that's a win
+		- if not, check if it's a tie
+			- if either, display dialog overlay
+	- move complete, next turn ready
+*/
+
+
+
 // Random bot selection
 function botChoice(){
-	if (gameboard.active == true){
 
-		currentPlayer = 'bot';
+	var availableMoves = new Array;
 
-		while (gameboard.grid[selectedSquare] !== null){
+		$.each( gameboard.grid, function( key, value ) {
+			if ( gameboard.grid[ key ] == null ){
+				availableMoves.push(key);
+			}
+		});
+		var arrIndex = genNum( availableMoves );
+		var selectedSquare = availableMoves[ arrIndex ];
+		var validMove = checkValid( selectedSquare );
+	
+		// Is that a valid choice?
+		if ( validMove === true ){
 			
-			var genNum = function(){
-				var i = Math.floor(Math.random() * cells.length);
-				return i;
-			};
-			var selectedSquare = cells[genNum()];
+			// Pass selection and player name into function
+			makeMove( currentPlayer , selectedSquare );
+			gameboard.checkWin( currentPlayer );
 		};
-
-		makeMove( currentPlayer , selectedSquare );
-	};
 };
 
 
+function genNum( arr ){
+	var i = Math.floor(Math.random() * arr.length);
+	return i;
+};
+
 
 // Defines all actions that occur after a selection is made
-function makeMove(player,selectedSquare){
+function makeMove( player , selectedSquare ){
+
 	$( '#' + selectedSquare ).addClass( player + '-pick');
 	gameboard.grid[ selectedSquare ] = player;
 };
@@ -396,7 +418,8 @@ function changeTurn(){
 	if (currentPlayer == player_1.id){
 		currentPlayer = player_2.id;
 		if (player_2.ai === true){
-			botChoice();
+			var timeoutID = window.setTimeout(botChoice, 300);
+			// botChoice();
 		};
 	} else if (currentPlayer == player_2.id){
 		currentPlayer = player_1.id;
@@ -406,6 +429,7 @@ function changeTurn(){
 
 
 function restartGame(){
+
 	gameboard.active = false;
 	$('.grid-square').removeClass('p1-pick p2-pick');
 
