@@ -21,70 +21,88 @@ $(document).ready(function(){
 
 // $('#welcome').delay(400).fadeIn(600).delay(600).fadeOut(600);
 // $('#game-list').delay(2200).fadeIn(600);
-$('#game-list').show(600);
+$('#intro').show();
 
 
 
+// Intro games list 
 
 $('#choose-tictac').on('click', function(){
-	$('#game-list').delay(200).fadeOut(200);
+	$('#intro').delay(200).fadeOut(200);
 	$('#choose-players').delay(600).fadeIn(200);
 });
 
 $('#choose-connect').on('click', function(){
 	alert('Sorry, this game is not yet ready');
-	// $('#game-list').delay(300).fadeOut(300);
-	// $('#choose-players').delay(600).fadeIn(300);
 });
 
 $('#choose-checkers').on('click', function(){
 	alert('Sorry, this game is not yet ready');
-	// $('#game-list').delay(300).fadeOut(300);
-	// $('#choose-players').delay(600).fadeIn(300);
 });
+
+
+
+// Choose 1 or 2 players
 
 $('#one-player').on('click', function(){
 	$('#choose-players').delay(200).fadeOut(200);
 	$('#names-1').delay(400).fadeIn(200);
+	$('#names-1 #p1-name').delay(700).focus();
 });
 
 $('#two-player').on('click', function(){
 	$('#choose-players').delay(200).fadeOut(200);
 	$('#names-2').delay(400).fadeIn(200);
+	$('#names-2 #p1-name').delay(700).focus();
 });
+
+
+
+// Enter player names
 
 $('#names-1 :submit').on('click', function(){
 	if ($('#p1-name').val() !== "") {
 
+		player_1.name = $('#names-1 #p1-name').val().toLowerCase();
+		player_2.name = 'computer';
+		
+		$('#score').html("<h3>" + player_1.name + ": <span id=\"p1-score\"></span></h3>");
+		$('#score').append("<h3>" + player_2.name + ": <span id=\"p2-score\"></span></h3>");
+		updateScore();
+
 		$('#names-1').delay(200).fadeOut(200);
+		$('#score').delay(200).fadeIn(200);
 		$('.board').delay(400).fadeIn(200);
-
-		player_1.name = $('#names-1 #p1-name').val();
-
 	};
 });
 
 $('#names-2 :submit').on('click', function(){
 
+	// Requrire fields
 	if ($('#names-2 #p1-name').val() == ""){
 		$('#names-2 #p1-name').focus();
-
 	} 
 	else if ($('#names-2 #p2-name').val() == ""){
 		$('#names-2 #p2-name').focus();
 	} 
 	else {
 
-		player_1.name = $('#names-2 #p1-name').val();
-		player_2.name = $('#names-2 #p2-name').val();
+		player_1.name = $('#names-2 #p1-name').val().toLowerCase();
+		player_2.name = $('#names-2 #p2-name').val().toLowerCase();
+
+		$('#score').html("<h3>" + player_1.name + ": <span id=\"p1-score\"></span></h3>");
+		$('#score').append("<h3>" + player_2.name + ": <span id=\"p2-score\"></span></h3>");
+		updateScore();
 
 		$('#names-2').delay(200).fadeOut(200);
+		$('#score').delay(200).fadeIn(200);
 		$('.board').delay(400).fadeIn(200);
-
 	};
 });
 
 
+
+// Win screen options
 
 $('#replay-tictac').on('click', function(){
 	$('.overlay-container').fadeOut(300);
@@ -98,8 +116,28 @@ $('#different-game').on('click', function(){
 });
 
 
+
+// New games list menu
+
+$('#new-tictac').on('click', function(){
+	$('#game-list').fadeOut(200);
+	$('.board').delay(200).fadeIn(200);
+	restartGame();
+});
+
+$('#new-connect').on('click', function(){
+	alert('Sorry, this game is not yet ready');
+});
+
+$('#new-checkers').on('click', function(){
+	alert('Sorry, this game is not yet ready');
+});
+
+
+
 // Overlay Test Button
-$('#testbutton a').on('click', function(){
+
+$('#settings a').on('click', function(){
 	$('#gameover').show();
 	$('.overlay-container').toggle();
 });
@@ -139,6 +177,9 @@ var player_2 = {
 	ai: false
 };
 
+$('#p1-score').html( player_1.score );
+$('#p2-score').html( player_2.score );
+
 var currentPlayer = player_1.id;
 var colorTheme;
 
@@ -158,6 +199,8 @@ var defineCols = 3;
 
 var x_axisValues = ['1','2','3','4','5','6','7','8','9','10'];
 var y_axisValues = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+
+
 
 
 
@@ -216,34 +259,38 @@ var gameboard = {
 
 
 function displayWinner( name ){
-
 	$('.overlay-container').fadeIn(200);
 	$('#gameover').show();
 	$('#winner-text').html("<h1>" + name + " wins</h1>");
 };
 
+function updateScore(){
+	$('#p1-score').html(player_1.score);
+	$('#p2-score').html(player_2.score);
+};
 
-gameboard.checkWin = function( player ){
+gameboard.checkWin = function( input ){
 
-	if (player == 'p1'){ 
-		winnerName = player_1.name;
-	} else if (player == 'p2'){
-		winnerName = player_2.name;
+	if (input == 'p1'){ 
+		var player = player_1;
+	} else if (input == 'p2'){
+		var player = player_2;
 	};
 
-
 	if (
-		(this.grid.a1 == player && this.grid.a2 == player && this.grid.a3 == player) ||
-		(this.grid.b1 == player && this.grid.b2 == player && this.grid.b3 == player) ||
-		(this.grid.c1 == player && this.grid.c2 == player && this.grid.c3 == player) ||
-		(this.grid.a1 == player && this.grid.b1 == player && this.grid.c1 == player) ||
-		(this.grid.a2 == player && this.grid.b2 == player && this.grid.c2 == player) ||
-		(this.grid.a3 == player && this.grid.b3 == player && this.grid.c3 == player) ||
-		(this.grid.a1 == player && this.grid.b2 == player && this.grid.c3 == player) ||
-		(this.grid.a3 == player && this.grid.b2 == player && this.grid.c1 == player) )
+		(this.grid.a1 == player.id && this.grid.a2 == player.id && this.grid.a3 == player.id) ||
+		(this.grid.b1 == player.id && this.grid.b2 == player.id && this.grid.b3 == player.id) ||
+		(this.grid.c1 == player.id && this.grid.c2 == player.id && this.grid.c3 == player.id) ||
+		(this.grid.a1 == player.id && this.grid.b1 == player.id && this.grid.c1 == player.id) ||
+		(this.grid.a2 == player.id && this.grid.b2 == player.id && this.grid.c2 == player.id) ||
+		(this.grid.a3 == player.id && this.grid.b3 == player.id && this.grid.c3 == player.id) ||
+		(this.grid.a1 == player.id && this.grid.b2 == player.id && this.grid.c3 == player.id) ||
+		(this.grid.a3 == player.id && this.grid.b2 == player.id && this.grid.c1 == player.id) )
 		{
-			displayWinner( winnerName );
+			displayWinner( player.name );
 			restartGame();
+			player.score++;
+			updateScore();
 		}
 	else {
 		return false;
@@ -354,7 +401,6 @@ function changeTurn(){
 	} else if (currentPlayer == player_2.id){
 		currentPlayer = player_1.id;
 	};
-
 };
 
 
@@ -362,7 +408,7 @@ function changeTurn(){
 function restartGame(){
 	gameboard.active = false;
 	$('.grid-square').removeClass('p1-pick p2-pick');
-	
+
 	// Resets each grid value to null
 	$.each( gameboard.grid, function( key, value ) {
 	  gameboard.grid[key] = null;

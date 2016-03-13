@@ -8,17 +8,16 @@
 
 </head>
 <body>
-<div id="testbutton"><a href=""><p>Activate</p></a></div>
-	<div class="container">
 
+
+
+	<div class="container">
 
 		<div id="welcome" class="menu">
 			<h1>GRID GAMES</h1>
 		</div>
 
-
-
-		<div id="game-list" class="menu">
+		<div id="intro" class="menu">
 			<h3>PICK A GAME</h3>
 			<ul>
 				<a href=""><li id="choose-tictac"><h1>tic-tac-toe</h1></li></a>
@@ -27,7 +26,14 @@
 			</ul>
 		</div>
 
-
+		<div id="game-list" class="menu">
+			<h3>PICK A NEW GAME</h3>
+			<ul>
+				<a href=""><li id="new-tictac"><h1>tic-tac-toe</h1></li></a>
+				<a href=""><li id="new-connect"><h1>connect four</h1></li></a>
+				<a href=""><li id="new-checkers"><h1>checkers</h1></li></a>
+			</ul>
+		</div>
 
 		<div id="choose-players" class="menu">
 			<h3>HOW MANY PLAYERS?</h3>
@@ -37,8 +43,6 @@
 			</ul>
 		</div>
 
-
-
 		<div id="names-1" class="menu">
 			<form>
 				<h3>PLAYER 1</h3>
@@ -46,8 +50,6 @@
 				<input type="submit" id="submit-names" style="display:none">
 			</form>
 		</div>
-
-
 
 		<div id="names-2" class="menu">
 			<form>
@@ -58,8 +60,6 @@
 				<input type="submit" id="submit-names" style="display:none">
 			</form>
 		</div>
-
-
 
 		<div class="board hide">
 			<div class="row">
@@ -82,6 +82,17 @@
 	</div>
 
 
+
+	<div class="container hud">
+		<div id="settings"><a href=""><img src="images/sprite-menu.svg" width="80%" height="80%"></a></div>
+		<div id="score" class="menu">
+			<h3>PLAYER 1: <span id="p1-score"></span></h3>
+			<h3>PLAYER 2: <span id="p2-score"></span></h3>
+		</div>
+	</div>
+
+
+
 	<div class="overlay-container">
 		<div class="container">
 		
@@ -97,8 +108,6 @@
 				</ul>
 			</div>	
 
-
-
 			<div id="gameodsr" class="menu">
 				<h3>PICK A GAME</h3>
 				<ul>
@@ -111,6 +120,7 @@
 
 		</div>
 	</div>
+
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
