@@ -8,7 +8,7 @@
 
 </head>
 <body>
-
+<div id="testbutton"><a href=""><p>Activate</p></a></div>
 	<div class="container">
 
 
@@ -17,7 +17,8 @@
 		</div>
 
 
-		<div id="intro" class="menu">
+
+		<div id="game-list" class="menu">
 			<h3>PICK A GAME</h3>
 			<ul>
 				<a href=""><li id="choose-tictac"><h1>tic-tac-toe</h1></li></a>
@@ -25,6 +26,7 @@
 				<a href=""><li id="choose-checkers"><h1>checkers</h1></li></a>
 			</ul>
 		</div>
+
 
 
 		<div id="choose-players" class="menu">
@@ -36,12 +38,27 @@
 		</div>
 
 
-		<div id="name-players" class="menu">
-			<h3>FIRST PLAYER</h3>
-			<input type="text" placeholder="enter name"></input>
-			<h3>SECOND PLAYER</h3>
-			<input type="text" placeholder="enter name"></input>
+
+		<div id="names-1" class="menu">
+			<form>
+				<h3>PLAYER 1</h3>
+				<input type="text" id="p1-name" placeholder="enter name" required>
+				<input type="submit" id="submit-names" style="display:none">
+			</form>
 		</div>
+
+
+
+		<div id="names-2" class="menu">
+			<form>
+				<h3>PLAYER 1</h3>
+				<input type="text" id="p1-name" placeholder="enter name" required>
+				<h3>PLAYER 2</h3>
+				<input type="text" id="p2-name" placeholder="enter name" required>
+				<input type="submit" id="submit-names" style="display:none">
+			</form>
+		</div>
+
 
 
 		<div class="board hide">
@@ -60,14 +77,41 @@
 				<div id="c2" class="grid-square"></div>
 				<div id="c3" class="grid-square"></div>
 			</div>
+		</div>
+
+	</div>
 
 
-			<div id="name-players" class="menu">
-				<h3>FIRST PLAYER</h3>
-				<input type="text" placeholder="enter name"></input>
-				<h3>SECOND PLAYER</h3>
-				<input type="text" placeholder="enter name"></input>
-			</div>
+	<div class="overlay-container">
+		<div class="container">
+		
+
+			<div id="gameover" class="menu">
+				<div id="winner-text">
+					<h1>Player 1 wins</h1>
+				</div>
+				<ul>
+					<a href=""><li id="replay-tictac"><h1>play again</h1></li></a>
+					<a href=""><li id="different-game"><h1>different game</h1></li></a>
+					<!-- <a href=""><li id="choose-checkers"><h1>change name</h1></li></a> -->
+				</ul>
+			</div>	
+
+
+
+			<div id="gameodsr" class="menu">
+				<h3>PICK A GAME</h3>
+				<ul>
+					<a href=""><li id="choose-tictac"><h1>tic-tac-toe</h1></li></a>
+					<a href=""><li id="choose-connect"><h1>connect four</h1></li></a>
+					<a href=""><li id="choose-checkers"><h1>checkers</h1></li></a>
+				</ul>
+			</div>	
+
+
+		</div>
+	</div>
+
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<!-- <script type="text/javascript" src="./js/jquery-2.1.4.min.js"></script> -->

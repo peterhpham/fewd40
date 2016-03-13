@@ -4,27 +4,12 @@ $(document).ready(function(){
 	$('a').click(function(event) {
 	  event.preventDefault();
 	});
+
+	$('input:submit').click(function(event) {
+	  event.preventDefault();
+	});
+
 });
-
-
-
-/*////////////////////////////
-   Esablish Game Parameters
-////////////////////////////*/
-
-
-// Global variables //
-
-var defineRows = 3;
-var defineCols = 3;
-
-var x_axisValues = ['1','2','3','4','5','6','7','8','9','10'];
-var y_axisValues = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
-
-var currentPlayer = 'user';
-
-
-
 
 
 
@@ -34,51 +19,155 @@ var currentPlayer = 'user';
    Initialization Flow
 ////////////////////////////*/
 
-$('#welcome').delay(400).fadeIn(800).delay(800).fadeOut(800);
-$('#intro').delay(2800).fadeIn(800);
+// $('#welcome').delay(400).fadeIn(600).delay(600).fadeOut(600);
+// $('#game-list').delay(2200).fadeIn(600);
+$('#game-list').show(600);
+
 
 
 
 $('#choose-tictac').on('click', function(){
-	$('#intro').delay(300).fadeOut(300);
-	// $('#choose-players').delay(600).fadeIn(300);
-	$('.board').delay(600).fadeIn(300);
-
+	$('#game-list').delay(200).fadeOut(200);
+	$('#choose-players').delay(600).fadeIn(200);
 });
 
 $('#choose-connect').on('click', function(){
 	alert('Sorry, this game is not yet ready');
-	// $('#intro').delay(300).fadeOut(300);
+	// $('#game-list').delay(300).fadeOut(300);
 	// $('#choose-players').delay(600).fadeIn(300);
 });
 
 $('#choose-checkers').on('click', function(){
 	alert('Sorry, this game is not yet ready');
-	// $('#intro').delay(300).fadeOut(300);
+	// $('#game-list').delay(300).fadeOut(300);
 	// $('#choose-players').delay(600).fadeIn(300);
 });
 
 $('#one-player').on('click', function(){
-	$('#choose-players').delay(300).fadeOut(300);
-	$('#name-players').delay(600).fadeIn(300);
+	$('#choose-players').delay(200).fadeOut(200);
+	$('#names-1').delay(400).fadeIn(200);
 });
 
 $('#two-player').on('click', function(){
-	alert('This feature is not yet ready');
-	// $('#choose-players').delay(300).fadeOut(300);
-	// $('#name-players').delay(600).fadeIn(300);
+	$('#choose-players').delay(200).fadeOut(200);
+	$('#names-2').delay(400).fadeIn(200);
+});
+
+$('#names-1 :submit').on('click', function(){
+	if ($('#p1-name').val() !== "") {
+
+		$('#names-1').delay(200).fadeOut(200);
+		$('.board').delay(400).fadeIn(200);
+
+		player_1.name = $('#names-1 #p1-name').val();
+
+	};
+});
+
+$('#names-2 :submit').on('click', function(){
+
+	if ($('#names-2 #p1-name').val() == ""){
+		$('#names-2 #p1-name').focus();
+
+	} 
+	else if ($('#names-2 #p2-name').val() == ""){
+		$('#names-2 #p2-name').focus();
+	} 
+	else {
+
+		player_1.name = $('#names-2 #p1-name').val();
+		player_2.name = $('#names-2 #p2-name').val();
+
+		$('#names-2').delay(200).fadeOut(200);
+		$('.board').delay(400).fadeIn(200);
+
+	};
 });
 
 
 
+$('#replay-tictac').on('click', function(){
+	$('.overlay-container').fadeOut(300);
+	restartGame();
+});
+
+$('#different-game').on('click', function(){
+	$('.overlay-container').toggle();
+	$('.board').hide();
+	$('#game-list').fadeIn(300);
+});
+
+
+// Overlay Test Button
+$('#testbutton a').on('click', function(){
+	$('#gameover').show();
+	$('.overlay-container').toggle();
+});
+
+
+// Game hover //
+// $('div.grid-square').on('mouseover', function(){
+// 	if ( gameboard.grid[ $(this).attr('id') ] == null ){
+// 		$( this ).addClass('hover');
+
+// 		$('div.grid-square').on('mouseout', function(){
+// 			$( this ).removeClass('hover');
+
+// 		});
+// 	};
+// });
 
 
 
 
-// Helpers //
+
+
+/*////////////////////////////
+  	Player - Variables
+////////////////////////////*/
+
+
+var player_1 = {
+	id: "p1",
+	name: "Player 1",
+	score: 0
+};
+var player_2 = {
+	id: "p2",
+	name: "Player 2",
+	score: 0,
+	ai: false
+};
+
+var currentPlayer = player_1.id;
+var colorTheme;
+
+
+
+
+
+
+
+/*////////////////////////////
+  	TicTac - Variables
+////////////////////////////*/
+
+
+var defineRows = 3;
+var defineCols = 3;
+
+var x_axisValues = ['1','2','3','4','5','6','7','8','9','10'];
+var y_axisValues = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+
+
+
+/*////////////////////////////
+  	Initialize Game Board
+////////////////////////////*/
+
 
 // Determines all possible coordinates on x/y axes
-var getGrid = function( numRows , numColumns ){
+function getGrid( numRows , numColumns ){
 	cells = new Array;
 	for (i=0; i<numRows; i++){
 		for (z=0; z<numColumns; z++){
@@ -89,10 +178,8 @@ var getGrid = function( numRows , numColumns ){
 };
 
 
-
-
 // Takes array of cooridinates and adds to new object
-var getCoordinates = function(){
+function getCoordinates(){
 	getGrid( defineRows , defineCols );
 	defineGrid = new Object;
 
@@ -104,16 +191,20 @@ var getCoordinates = function(){
 };
 
 
-
-
 // Define board as object to access later
 var gameboard = {
 	rows: defineRows,
 	cols: defineCols,
-	grid: getCoordinates()
+	grid: getCoordinates(),
+	game: 'tictac',
+	active: true
 };
 
-console.log(gameboard);
+// console.log(gameboard);
+
+
+
+
 
 
 
@@ -124,58 +215,45 @@ console.log(gameboard);
 ////////////////////////////*/
 
 
+function displayWinner( name ){
 
-gameboard.checkWin = function(player){
-
-	if (this.grid.a1 == player && this.grid.a2 == player && this.grid.a3 == player) {
-		// alert(player + ' is the winner');
-		$('.board').html("<h2>" + player + " is the winner</h2>");
-		restartGame();
-	};
-	if (this.grid.b1 == player && this.grid.b2 == player && this.grid.b3 == player) {
-		// alert(player + ' is the winner');
-		$('.board').html("<h2>" + player + " is the winner</h2>");
-		restartGame();
-
-	};
-	if (this.grid.c1 == player && this.grid.c2 == player && this.grid.c3 == player) {
-		// alert(player + ' is the winner');
-		$('.board').html("<h2>" + player + " is the winner</h2>");
-		restartGame();
-
-	};
-	if (this.grid.a1 == player && this.grid.b1 == player && this.grid.c1 == player) {
-		// alert(player + ' is the winner');
-		$('.board').html("<h2>" + player + " is the winner</h2>");
-		restartGame();
-
-	};
-	if (this.grid.a2 == player && this.grid.b2 == player && this.grid.c2 == player) {
-		// alert(player + ' is the winner');
-		$('.board').html("<h2>" + player + " is the winner</h2>");
-		restartGame();
-
-	};
-	if (this.grid.a3 == player && this.grid.b3 == player && this.grid.c3 == player) {
-		// alert(player + ' is the winner');
-		$('.board').html("<h2>" + player + " is the winner</h2>");
-		restartGame();
-
-	};
-	if (this.grid.a1 == player && this.grid.b2 == player && this.grid.c3 == player) {
-		// alert(player + ' is the winner');
-		$('.board').html("<h2>" + player + " is the winner</h2>");
-		restartGame();
-
-	};
-	if (this.grid.a3 == player && this.grid.b2 == player && this.grid.c1 == player) {
-		// alert(player + ' is the winner');
-		$('.board').html("<h2>" + player + " is the winner</h2>");
-		restartGame();
-
-	};
-	return false;
+	$('.overlay-container').fadeIn(200);
+	$('#gameover').show();
+	$('#winner-text').html("<h1>" + name + " wins</h1>");
 };
+
+
+gameboard.checkWin = function( player ){
+
+	if (player == 'p1'){ 
+		winnerName = player_1.name;
+	} else if (player == 'p2'){
+		winnerName = player_2.name;
+	};
+
+
+	if (
+		(this.grid.a1 == player && this.grid.a2 == player && this.grid.a3 == player) ||
+		(this.grid.b1 == player && this.grid.b2 == player && this.grid.b3 == player) ||
+		(this.grid.c1 == player && this.grid.c2 == player && this.grid.c3 == player) ||
+		(this.grid.a1 == player && this.grid.b1 == player && this.grid.c1 == player) ||
+		(this.grid.a2 == player && this.grid.b2 == player && this.grid.c2 == player) ||
+		(this.grid.a3 == player && this.grid.b3 == player && this.grid.c3 == player) ||
+		(this.grid.a1 == player && this.grid.b2 == player && this.grid.c3 == player) ||
+		(this.grid.a3 == player && this.grid.b2 == player && this.grid.c1 == player) )
+		{
+			displayWinner( winnerName );
+			restartGame();
+		}
+	else {
+		return false;
+	};
+};
+
+
+
+
+
 
 
 
@@ -184,66 +262,111 @@ gameboard.checkWin = function(player){
 ////////////////////////////*/
 
 
+/*   Pseudo 
 
-// User selectionion
+Game Loads, player 1 turn first
+First player selects a square
+	- check if it's already chosen
+		- if it is, block choice
+	- mark square with player choice
+	- check if that's a win
+		- if not, check if it's a tie
+			- if either, display dialog overlay
+	- move complete, next turn ready
+
+
+
+*/
+
+
+
+
+
+
+
+// Capture player's board move
 $('div.grid-square').on('click', function(){
-
-	currentPlayer = 'user';
-	var selection = $(this).attr('id');
-
-	makeMove(currentPlayer,selection);
-	// Change turns
-	var timeoutID = window.setTimeout(botChoice, 600);
+	
+	// Get selected grid cell's #id
+	var selectedSquare = $( this ).attr('id');
+	var validMove = checkValid( selectedSquare );
+	
+	// Is that a valid choice?
+	if ( validMove === true ){
+		
+		// Pass selection and player name into function
+		makeMove( currentPlayer , selectedSquare );
+		gameboard.checkWin( currentPlayer );
+		changeTurn();
+	};
 });
 
 
 
+function checkValid( check ){
+	if ( gameboard.grid[ check ] == null ){
+		// console.log("move is good");
+		return true;
+	} else {
+		// console.log("move is bad");
+		return false;
+	};
+};
+
+
 
 // Random bot selection
-var botChoice = function(){
-	currentPlayer = 'bot';
+function botChoice(){
+	if (gameboard.active == true){
 
-	while (gameboard.grid[selection] !== null){
-		
-		var genNum = function(){
-			var i = Math.floor(Math.random() * cells.length);
-			return i;
+		currentPlayer = 'bot';
+
+		while (gameboard.grid[selectedSquare] !== null){
+			
+			var genNum = function(){
+				var i = Math.floor(Math.random() * cells.length);
+				return i;
+			};
+			var selectedSquare = cells[genNum()];
 		};
-		var selection = cells[genNum()];
+
+		makeMove( currentPlayer , selectedSquare );
 	};
-
-	makeMove(currentPlayer,selection);
-
 };
 
 
 
 // Defines all actions that occur after a selection is made
-var makeMove = function(player,selection){
-
-	$('#'+selection).addClass(player+'-pick');
-	gameboard.grid[selection] = player;
-	gameboard.checkWin(player);
-	console.log(player + ' selected ' + selection);
+function makeMove(player,selectedSquare){
+	$( '#' + selectedSquare ).addClass( player + '-pick');
+	gameboard.grid[ selectedSquare ] = player;
 };
 
 
 
-var restartGame = function(){
-	gameboard.grid.map(function(){
-		return null;
-	})
-	console.log(gameboard.grid);
+function changeTurn(){
+
+	if (currentPlayer == player_1.id){
+		currentPlayer = player_2.id;
+		if (player_2.ai === true){
+			botChoice();
+		};
+	} else if (currentPlayer == player_2.id){
+		currentPlayer = player_1.id;
+	};
+
 };
 
 
 
-// Determine whose turn it is
-// Create random computer selection
-// 	- determine if space is taken 
-//		-if yes, re roll
-// Declare a Reset function
-// 	- Change all values to initial
-//	- Display Winner statement on screen
+function restartGame(){
+	gameboard.active = false;
+	$('.grid-square').removeClass('p1-pick p2-pick');
+	
+	// Resets each grid value to null
+	$.each( gameboard.grid, function( key, value ) {
+	  gameboard.grid[key] = null;
+	});
+};
 
 
