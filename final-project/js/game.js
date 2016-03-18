@@ -184,9 +184,8 @@ var colorTheme;
 
 var defineRows = 3;
 var defineCols = 3;
+var allWinningMoves = new Array;
 
-var x_axisValues = ['1','2','3','4','5','6','7','8','9','10'];
-var y_axisValues = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
 
 
 
@@ -202,13 +201,16 @@ var y_axisValues = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
 // Determines all possible coordinates on x/y axes
 function getGrid( numRows , numColumns ){
 	cells = new Array;
-	for (i=0; i<numRows; i++){
-		for (z=0; z<numColumns; z++){
-			cells.push(y_axisValues[i] + x_axisValues[z]);
+	for (y=0; y<numRows; y++){
+		for (x=0; x<numColumns; x++){
+			cells.push( (x+1) + '-' + (y+1) );
+			console.log('x:' + x);
 		};
+		console.log('   y:' + y);
 	};
 	return cells;
 };
+
 
 
 // Takes array of cooridinates and adds to new object
@@ -224,13 +226,14 @@ function getCoordinates(){
 };
 
 
+
 // Define board as object to access later
 var gameboard = {
 	rows: defineRows,
 	cols: defineCols,
 	grid: getCoordinates(),
 	game: 'tictac',
-	active: true
+	active: true,
 };
 
 // console.log(gameboard);
@@ -248,46 +251,130 @@ var gameboard = {
 ////////////////////////////*/
 
 
+
+/*	Pseudo 
+
+	Iterate through each grid square
+	Check if there are two moves on left/right
+	Check if there are two moves on top/bottom
+	Check if there are two moves on diagonal
+	for each, make array of winning spaces
+	create array of those combos
+*/
+
+
+
+function allPossibleWins(){
+	
+	var max_x = defineCols;
+	var max_y = defineRows;
+	var gridKeys = Object.keys(gameboard.grid);
+
+	for (i = 0; i<gridKeys.length; i++){
+		var coordinates = gridKeys[i];
+		var this_x = parseInt( coordinates[0] );
+		var this_y = parseInt( coordinates[2] );
+		
+		if ((this_x+2) <= max_x){
+			var logWin = [
+				( (this_x+0)  +  "-"  +   this_y ),
+				( (this_x+1)  +  "-"  +   this_y ),
+				( (this_x+2)  +  "-"  +   this_y )
+			];
+			// console.log ("   "+ logWin);
+			allWinningMoves.push(logWin);
+		};
+
+		if ((this_y+2) <= max_y){
+			var logWin = [
+				( this_x  +  "-"  +  (this_y+0) ),
+				( this_x  +  "-"  +  (this_y+1) ),
+				( this_x  +  "-"  +  (this_y+2) )
+			];
+			// console.log ("   "+ logWin);
+			allWinningMoves.push(logWin);
+		};
+
+		if ( (this_x+2) <= max_x && (this_y+2) <= max_y ){
+			var logWin = [
+				( this_x+0  +  "-"  +  (this_y+0) ),
+				( this_x+1  +  "-"  +  (this_y+1) ),
+				( this_x+2  +  "-"  +  (this_y+2) )
+			];
+			// console.log ("   "+ logWin);
+			allWinningMoves.push(logWin);
+		};
+
+		if ( (this_x-2) >= 1 && (this_y+2) <= max_y ){
+			var logWin = [
+				( this_x-0  +  "-"  +  (this_y+0) ),
+				( this_x-1  +  "-"  +  (this_y+1) ),
+				( this_x-2  +  "-"  +  (this_y+2) )
+			];
+			// console.log ("   "+ logWin);
+			allWinningMoves.push(logWin);
+		};
+
+	};
+	console.log(allWinningMoves);
+	// return allWinningMoves;
+};
+
+allPossibleWins();
+
+
+
+function compareMoves( key ) {
+	// console.log("Does space " + gameboard.grid[ key ] + " = " + currentPlayer + " ?");
+    return gameboard.grid[ key ] == currentPlayer;
+};
+
+
+
+gameboard.checkWin = function checkForWin(){
+
+	if (currentPlayer == 'p1'){ 
+		var player = player_1;
+	} else if (currentPlayer == 'p2'){
+		var player = player_2;
+	};
+
+	var win;
+	for (i=0; i<allWinningMoves.length; i++){
+		win = allWinningMoves[i].every(compareMoves);
+		if (win == true) {break;}
+	};
+
+	console.log(win);
+	if (win == true) {
+
+		displayWinner( player.name );
+		restartGame();
+		player.score++;
+		updateScore();
+	}
+	else {
+		changeTurn();
+		return false;
+	};
+};
+
+
+
 function displayWinner( name ){
 	$('.overlay-container').fadeIn(200);
 	$('#gameover').show();
 	$('#winner-text').html("<h1>" + name + " wins</h1>");
 };
 
+
+
 function updateScore(){
 	$('#p1-score').html(player_1.score);
 	$('#p2-score').html(player_2.score);
 };
 
-gameboard.checkWin = function( input ){
 
-	if (input == 'p1'){ 
-		var player = player_1;
-	} else if (input == 'p2'){
-		var player = player_2;
-	};
-
-	if (
-		(this.grid.a1 == player.id && this.grid.a2 == player.id && this.grid.a3 == player.id) ||
-		(this.grid.b1 == player.id && this.grid.b2 == player.id && this.grid.b3 == player.id) ||
-		(this.grid.c1 == player.id && this.grid.c2 == player.id && this.grid.c3 == player.id) ||
-		(this.grid.a1 == player.id && this.grid.b1 == player.id && this.grid.c1 == player.id) ||
-		(this.grid.a2 == player.id && this.grid.b2 == player.id && this.grid.c2 == player.id) ||
-		(this.grid.a3 == player.id && this.grid.b3 == player.id && this.grid.c3 == player.id) ||
-		(this.grid.a1 == player.id && this.grid.b2 == player.id && this.grid.c3 == player.id) ||
-		(this.grid.a3 == player.id && this.grid.b2 == player.id && this.grid.c1 == player.id) )
-		{
-			displayWinner( player.name );
-			restartGame();
-			player.score++;
-			updateScore();
-		}
-	else {
-
-		changeTurn();
-		return false;
-	};
-};
 
 
 
@@ -301,17 +388,17 @@ gameboard.checkWin = function( input ){
 ////////////////////////////*/
 
 
-/*   Pseudo 
+/*  Pseudo 
 
-Game Loads, player 1 turn first
-First player selects a square
-	- check if it's already chosen
-		- if it is, block choice
-	- mark square with player choice
-	- check if that's a win
-		- if not, check if it's a tie
-			- if either, display dialog overlay
-	- move complete, next turn ready
+	Game Loads, player 1 turn first
+	First player selects a square
+		- check if it's already chosen
+			- if it is, block choice
+		- mark square with player choice
+		- check if that's a win
+			- if not, check if it's a tie
+				- if either, display dialog overlay
+		- move complete, next turn ready
 */
 
 
@@ -328,7 +415,7 @@ $('div.grid-square').on('click', function(){
 		
 		// Pass selection and player name into function
 		makeMove( currentPlayer , selectedSquare );
-		gameboard.checkWin( currentPlayer )
+		gameboard.checkWin();
 	};
 });
 
@@ -376,7 +463,7 @@ A selection is generated
 
 // Random bot selection
 function botChoice(){
-
+	console.log('bots turn');
 	var availableMoves = new Array;
 
 		$.each( gameboard.grid, function( key, value ) {
@@ -406,7 +493,7 @@ function genNum( arr ){
 
 // Defines all actions that occur after a selection is made
 function makeMove( player , selectedSquare ){
-
+	console.log(selectedSquare);
 	$( '#' + selectedSquare ).addClass( player + '-pick');
 	gameboard.grid[ selectedSquare ] = player;
 };
@@ -438,5 +525,3 @@ function restartGame(){
 	  gameboard.grid[key] = null;
 	});
 };
-
-

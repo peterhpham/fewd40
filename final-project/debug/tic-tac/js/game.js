@@ -190,6 +190,7 @@ var colorTheme;
 
 var defineRows = 3;
 var defineCols = 3;
+var allWinningMoves = new Array;
 
 
 
@@ -206,13 +207,14 @@ function getGrid( numRows , numColumns ){
 	cells = new Array;
 	for (y=0; y<numRows; y++){
 		for (x=0; x<numColumns; x++){
-			cells.push( (x+1) + ',' + (y+1) );
+			cells.push( (x+1) + '-' + (y+1) );
 			console.log('x:' + x);
 		};
 		console.log('   y:' + y);
 	};
 	return cells;
 };
+
 
 
 // Takes array of cooridinates and adds to new object
@@ -235,30 +237,27 @@ var gameboard = {
 	cols: defineCols,
 	grid: getCoordinates(),
 	game: 'tictac',
-	active: true
+	active: true,
 };
 
 // console.log(gameboard);
 
 
 
-/*
+/*	Pseudo 
+
 	Iterate through each grid square
 	Check if there are two moves on left/right
 	Check if there are two moves on top/bottom
 	Check if there are two moves on diagonal
-	
 	for each, make array of winning spaces
 	create array of those combos
-	
-
 */
 
 function allPossibleWins(){
 	
 	var max_x = defineCols;
 	var max_y = defineRows;
-	var allWinningMoves = new Array;
 	var gridKeys = Object.keys(gameboard.grid);
 
 	for (i = 0; i<gridKeys.length; i++){
@@ -268,9 +267,9 @@ function allPossibleWins(){
 		
 		if ((this_x+2) <= max_x){
 			var logWin = [
-				( (this_x+0)  +  ","  +   this_y ),
-				( (this_x+1)  +  ","  +   this_y ),
-				( (this_x+2)  +  ","  +   this_y )
+				( (this_x+0)  +  "-"  +   this_y ),
+				( (this_x+1)  +  "-"  +   this_y ),
+				( (this_x+2)  +  "-"  +   this_y )
 			];
 			// console.log ("   "+ logWin);
 			allWinningMoves.push(logWin);
@@ -278,9 +277,9 @@ function allPossibleWins(){
 
 		if ((this_y+2) <= max_y){
 			var logWin = [
-				( this_x  +  ","  +  (this_y+0) ),
-				( this_x  +  ","  +  (this_y+1) ),
-				( this_x  +  ","  +  (this_y+2) )
+				( this_x  +  "-"  +  (this_y+0) ),
+				( this_x  +  "-"  +  (this_y+1) ),
+				( this_x  +  "-"  +  (this_y+2) )
 			];
 			// console.log ("   "+ logWin);
 			allWinningMoves.push(logWin);
@@ -288,9 +287,9 @@ function allPossibleWins(){
 
 		if ( (this_x+2) <= max_x && (this_y+2) <= max_y ){
 			var logWin = [
-				( this_x+0  +  ","  +  (this_y+0) ),
-				( this_x+1  +  ","  +  (this_y+1) ),
-				( this_x+2  +  ","  +  (this_y+2) )
+				( this_x+0  +  "-"  +  (this_y+0) ),
+				( this_x+1  +  "-"  +  (this_y+1) ),
+				( this_x+2  +  "-"  +  (this_y+2) )
 			];
 			// console.log ("   "+ logWin);
 			allWinningMoves.push(logWin);
@@ -298,9 +297,9 @@ function allPossibleWins(){
 
 		if ( (this_x-2) >= 1 && (this_y+2) <= max_y ){
 			var logWin = [
-				( this_x-0  +  ","  +  (this_y+0) ),
-				( this_x-1  +  ","  +  (this_y+1) ),
-				( this_x-2  +  ","  +  (this_y+2) )
+				( this_x-0  +  "-"  +  (this_y+0) ),
+				( this_x-1  +  "-"  +  (this_y+1) ),
+				( this_x-2  +  "-"  +  (this_y+2) )
 			];
 			// console.log ("   "+ logWin);
 			allWinningMoves.push(logWin);
@@ -308,8 +307,55 @@ function allPossibleWins(){
 
 	};
 	console.log(allWinningMoves);
+	// return allWinningMoves;
 };
 
+allPossibleWins();
+
+
+
+function compareMoves( key ) {
+	// console.log("Does space " + gameboard.grid[ key ] + " = " + currentPlayer + " ?");
+    return gameboard.grid[ key ] == currentPlayer;
+};
+
+
+
+gameboard.checkWin = function checkForWin(){
+
+	if (currentPlayer == 'p1'){ 
+		var player = player_1;
+	} else if (currentPlayer == 'p2'){
+		var player = player_2;
+	};
+
+	var win;
+	for (i=0; i<allWinningMoves.length; i++){
+		win = allWinningMoves[i].every(compareMoves);
+		if (win == true) {break;}
+	};
+	console.log(win);
+	if (win == true){
+			displayWinner( player.name );
+			alert('win');
+			restartGame();
+			player.score++;
+			updateScore();
+		}
+		else {
+			changeTurn();
+			return false;
+		};
+};
+
+
+
+
+
+
+
+
+				
 
 
 
@@ -331,35 +377,35 @@ function updateScore(){
 	$('#p2-score').html(player_2.score);
 };
 
-gameboard.checkWin = function( input ){
+// gameboard.checkWin = function( input ){
 
-	if (input == 'p1'){ 
-		var player = player_1;
-	} else if (input == 'p2'){
-		var player = player_2;
-	};
+// 	if (input == 'p1'){ 
+// 		var player = player_1;
+// 	} else if (input == 'p2'){
+// 		var player = player_2;
+// 	};
 
-	if (
-		(this.grid.a1 == player.id && this.grid.a2 == player.id && this.grid.a3 == player.id) ||
-		(this.grid.b1 == player.id && this.grid.b2 == player.id && this.grid.b3 == player.id) ||
-		(this.grid.c1 == player.id && this.grid.c2 == player.id && this.grid.c3 == player.id) ||
-		(this.grid.a1 == player.id && this.grid.b1 == player.id && this.grid.c1 == player.id) ||
-		(this.grid.a2 == player.id && this.grid.b2 == player.id && this.grid.c2 == player.id) ||
-		(this.grid.a3 == player.id && this.grid.b3 == player.id && this.grid.c3 == player.id) ||
-		(this.grid.a1 == player.id && this.grid.b2 == player.id && this.grid.c3 == player.id) ||
-		(this.grid.a3 == player.id && this.grid.b2 == player.id && this.grid.c1 == player.id) )
-		{
-			displayWinner( player.name );
-			restartGame();
-			player.score++;
-			updateScore();
-		}
-	else {
+// 	if (
+// 		(this.grid.a1 == player.id && this.grid.a2 == player.id && this.grid.a3 == player.id) ||
+// 		(this.grid.b1 == player.id && this.grid.b2 == player.id && this.grid.b3 == player.id) ||
+// 		(this.grid.c1 == player.id && this.grid.c2 == player.id && this.grid.c3 == player.id) ||
+// 		(this.grid.a1 == player.id && this.grid.b1 == player.id && this.grid.c1 == player.id) ||
+// 		(this.grid.a2 == player.id && this.grid.b2 == player.id && this.grid.c2 == player.id) ||
+// 		(this.grid.a3 == player.id && this.grid.b3 == player.id && this.grid.c3 == player.id) ||
+// 		(this.grid.a1 == player.id && this.grid.b2 == player.id && this.grid.c3 == player.id) ||
+// 		(this.grid.a3 == player.id && this.grid.b2 == player.id && this.grid.c1 == player.id) )
+// 		{
+// 			displayWinner( player.name );
+// 			restartGame();
+// 			player.score++;
+// 			updateScore();
+// 		}
+// 	else {
 
-		changeTurn();
-		return false;
-	};
-};
+// 		changeTurn();
+// 		return false;
+// 	};
+// };
 
 
 
@@ -478,7 +524,7 @@ function genNum( arr ){
 
 // Defines all actions that occur after a selection is made
 function makeMove( player , selectedSquare ){
-
+	console.log(selectedSquare);
 	$( '#' + selectedSquare ).addClass( player + '-pick');
 	gameboard.grid[ selectedSquare ] = player;
 };
