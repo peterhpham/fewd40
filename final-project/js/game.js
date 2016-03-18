@@ -192,7 +192,7 @@ var player_2 = {
 $('#p1-score').html( player_1.score );
 $('#p2-score').html( player_2.score );
 
-var currentPlayer = player_1.id;
+var currentPlayer = player_1;
 var colorTheme;
 
 
@@ -215,7 +215,8 @@ var board = {
 	game: 'tictac',
 	active: true,
 };
-defineGridNew();
+
+defineGrid();
 
 
 
@@ -237,7 +238,8 @@ defineGridNew();
 		- get rows/columns
 		- generate 2d grid
 		- attach grid to board object
-		- 
+	- Determine all Possible Wins
+	- 	 
 
 
 
@@ -249,63 +251,24 @@ defineGridNew();
 
 // Determines all possible coordinates on x/y axes
 
-// function getGridSize( numRows , numColumns ){
-
-// 	cells = new Array;
-// 	for (y=0; y<numRows; y++){
-// 		for (x=0; x<numColumns; x++){
-// 			cells.push( (x+1) + '-' + (y+1) );
-// 			// console.log('x:' + x);
-// 		};
-// 		// console.log('   y:' + y);
-// 	};
-// 	return cells;
-// };
-
-
-
-// // Takes array of cooridinates and adds to new object
-
-// function getCoordinates(){
-
-// 	getGridSize( board.rows , board.cols );
-// 	defineGrid = new Object;
-
-// 	for (i=0; i<cells.length; i++){
-// 		var cellName = cells[i];
-// 		defineGrid[cellName] = null;
-// 	};
-// 	board.grid = defineGrid;
-// };
-
-
-
-
-function defineGridNew(){
-
-	var arr = new Array;
+function defineGrid(){
 
 	for (y=0; y < board.rows; y++){
-
 		for (x=0; x < board.cols; x++){
-			arr.push( (x+1) + '-' + (y+1) );
-			// console.log('x:' + x);
+
+			var newKey = (x+1) + '-' + (y+1);
+			board.grid[newKey] = null;
 		};
-		// console.log('   y:' + y);
 	};
-	
-
-	for (i=0; i < arr.length; i++){
-		board.grid[ arr[i] ] = null;
-	};
-
 	return board.grid;
-
 };
 
 
 
-
+function loadGame(){
+	defineGrid();
+	allPossibleWins();
+};
 
 
 
@@ -383,47 +346,41 @@ function allPossibleWins(){
 
 	};
 	console.log(allWinningMoves);
-	// return allWinningMoves;
 };
 
 allPossibleWins();
 
 
 
+
+
 function compareMoves( key ) {
-	// console.log("Does space " + board.grid[ key ] + " = " + currentPlayer + " ?");
-    return board.grid[ key ] == currentPlayer;
+    return board.grid[ key ] == currentPlayer.id;
 };
 
 
 
-board.checkWin = function checkForWin(){
 
-	if (currentPlayer == 'p1'){ 
-		var player = player_1;
-	} else if (currentPlayer == 'p2'){
-		var player = player_2;
-	};
+board.checkWin = function (){
 
-	var win;
 	for (i=0; i<allWinningMoves.length; i++){
-		win = allWinningMoves[i].every(compareMoves);
-		if (win == true) {break;}
+
+		var win = allWinningMoves[i].every(compareMoves);
+
+		if (win == true) {
+
+			displayWinner(currentPlayer.name);
+			currentPlayer.score++;
+			restartGame();
+			updateScore();
+			break;
+		};
 	};
 
-	console.log(win);
-	if (win == true) {
-
-		displayWinner( player.name );
-		restartGame();
-		player.score++;
-		updateScore();
-	}
-	else {
-		changeTurn();
-		return false;
-	};
+	changeTurn();
+	return false;
 };
+
 
 
 
@@ -435,6 +392,7 @@ function displayWinner( name ){
 
 
 
+
 function updateScore(){
 	$('#p1-score').html(player_1.score);
 	$('#p2-score').html(player_2.score);
@@ -443,8 +401,32 @@ function updateScore(){
 
 
 
+function changeTurn(){
+
+	if (currentPlayer == player_1){
+		currentPlayer = player_2;
+		if (player_2.ai === true){
+			var timeoutID = window.setTimeout(botChoice, 300);
+			// botChoice();
+		};
+	} else if (currentPlayer == player_2){
+		currentPlayer = player_1;
+	};
+};
 
 
+
+
+function restartGame(){
+
+	board.active = false;
+	$('.grid-square').removeClass('p1-pick p2-pick');
+
+	// Resets each grid value to null
+	$.each( board.grid, function( key, value ) {
+	  board.grid[key] = null;
+	});
+};
 
 
 
@@ -470,35 +452,57 @@ function updateScore(){
 
 
 // Capture player's board move
+
 $('div.grid-square').on('click', function(){
-	
-	// Get selected grid cell's #id
-	var selectedSquare = $( this ).attr('id');
-	var validMove = checkValid( selectedSquare );
-	
-	// Is that a valid choice?
-	if ( validMove === true ){
-		
-		// Pass selection and player name into function
-		makeMove( currentPlayer , selectedSquare );
+
+	select = $(this).attr('id');
+
+	if (isSpaceOpen( select ) === true ){
+
+		makeMove();
 		board.checkWin();
 	};
 });
 
 
 
-function checkValid( check ){
+// Check if selection is already taken
 
-	if ( board.grid[ check ] == null ){
-		// console.log("move is good");
+function isSpaceOpen( check ){
+
+	if (board.grid[ check ] === null){
 		return true;
 	} else {
-		// console.log("move is bad");
 		return false;
 	};
 };
 
 
+
+
+
+// Defines all actions that occur after a selection is made
+
+function makeMove(){
+
+	if (board.game === 'tictac'){
+
+		$( '#' + select ).addClass( currentPlayer.id + '-pick');
+		board.grid[ select ] = currentPlayer.id;
+	};
+
+	if (board.game === 'connect'){
+
+		//
+		//
+	};
+
+	if (board.game === 'checkers'){
+
+		//
+		//
+	};
+};
 
 
 
@@ -536,8 +540,8 @@ function botChoice(){
 	console.log('bots turn');
 	var availableMoves = new Array;
 	var arrIndex = genNum( availableMoves );
-	var selectedSquare = availableMoves[ arrIndex ];
-	var validMove = checkValid( selectedSquare );
+	var select = availableMoves[ arrIndex ];
+	var validMove = isSpaceOpen( select );
 
 
 	$.each( board.grid, function( key, value ) {
@@ -551,7 +555,7 @@ function botChoice(){
 	if ( validMove === true ){
 		
 		// Pass selection and player name into function
-		makeMove( currentPlayer , selectedSquare );
+		makeMove( currentPlayer , select );
 		board.checkWin( currentPlayer );
 	};
 };
@@ -567,44 +571,8 @@ function genNum( arr ){
 
 
 
-// Defines all actions that occur after a selection is made
-function makeMove( player , selectedSquare ){
-	console.log(selectedSquare);
-	$( '#' + selectedSquare ).addClass( player + '-pick');
-	board.grid[ selectedSquare ] = player;
-};
 
 
-
-
-
-function changeTurn(){
-
-	if (currentPlayer == player_1.id){
-		currentPlayer = player_2.id;
-		if (player_2.ai === true){
-			var timeoutID = window.setTimeout(botChoice, 300);
-			// botChoice();
-		};
-	} else if (currentPlayer == player_2.id){
-		currentPlayer = player_1.id;
-	};
-};
-
-
-
-
-
-function restartGame(){
-
-	board.active = false;
-	$('.grid-square').removeClass('p1-pick p2-pick');
-
-	// Resets each grid value to null
-	$.each( board.grid, function( key, value ) {
-	  board.grid[key] = null;
-	});
-};
 
 
 
