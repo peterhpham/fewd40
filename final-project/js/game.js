@@ -19,26 +19,55 @@ $(document).ready(function(){
    Initialization Flow
 ////////////////////////////*/
 
-// $('#welcome').delay(400).fadeIn(600).delay(600).fadeOut(600);
-// $('#game-list').delay(2200).fadeIn(600);
-$('#intro').show();
+$('#welcome').delay(400).fadeIn(600).delay(600).fadeOut(600);
+$('#intro').delay(2200).fadeIn(600);
+// $('#intro').show();
 
 
 
 // Intro games list 
-
 $('#choose-tictac').on('click', function(){
 	$('#intro').delay(200).fadeOut(200);
 	$('#choose-players').delay(600).fadeIn(200);
+	chosenGame = '#tictac';
 });
 
 $('#choose-connect').on('click', function(){
-	alert('Sorry, this game is not yet ready');
+	chosenGame = '#connect';
+	$('#intro').delay(200).fadeOut(200);
+	$(chosenGame).delay(400).fadeIn(200);
 });
 
 $('#choose-checkers').on('click', function(){
 	alert('Sorry, this game is not yet ready');
+	chosenGame = '#checkers';
 });
+
+
+
+
+
+// New games list menu
+$('#new-tictac').on('click', function(){
+	chosenGame = '#tictac';
+	$('#game-list').fadeOut(200);
+	$(chosenGame).delay(200).fadeIn(200);
+	restartGame();
+});
+
+$('#new-connect').on('click', function(){
+	chosenGame = '#connect';
+	$('#game-list').fadeOut(200);
+	$(chosenGame).delay(200).fadeIn(200);
+	restartGame();
+});
+
+$('#new-checkers').on('click', function(){
+	chosenGame = '#checkers';
+	alert('Sorry, this game is not yet ready');
+});
+
+
 
 
 
@@ -58,9 +87,12 @@ $('#two-player').on('click', function(){
 
 
 
+
+
 // Enter player names
 
 $('#names-1 :submit').on('click', function(){
+	
 	if ($('#p1-name').val() !== "") {
 
 		player_1.name = $('#names-1 #p1-name').val().toLowerCase();
@@ -73,9 +105,11 @@ $('#names-1 :submit').on('click', function(){
 
 		$('#names-1').delay(200).fadeOut(200);
 		$('#score').delay(400).fadeIn(200);
-		$('.board').delay(400).fadeIn(200);
+		$(chosenGame).delay(400).fadeIn(200);
 	};
 });
+
+
 
 $('#names-2 :submit').on('click', function(){
 
@@ -88,6 +122,8 @@ $('#names-2 :submit').on('click', function(){
 	} 
 	else {
 
+		// After names filled, do these things:
+
 		player_1.name = $('#names-2 #p1-name').val().toLowerCase();
 		player_2.name = $('#names-2 #p2-name').val().toLowerCase();
 		player_2.ai = false;
@@ -98,9 +134,11 @@ $('#names-2 :submit').on('click', function(){
 
 		$('#names-2').delay(200).fadeOut(200);
 		$('#score').delay(400).fadeIn(200);
-		$('.board').delay(400).fadeIn(200);
+		$(chosenGame).delay(400).fadeIn(200);
 	};
 });
+
+
 
 
 
@@ -113,35 +151,21 @@ $('#replay-tictac').on('click', function(){
 
 $('#different-game').on('click', function(){
 	$('.overlay-container').toggle();
-	$('.board').hide();
+	$('.board-wrap').hide();
 	$('#game-list').fadeIn(300);
 });
 
 
 
-// New games list menu
-
-$('#new-tictac').on('click', function(){
-	$('#game-list').fadeOut(200);
-	$('.board').delay(200).fadeIn(200);
-	restartGame();
-});
-
-$('#new-connect').on('click', function(){
-	alert('Sorry, this game is not yet ready');
-});
-
-$('#new-checkers').on('click', function(){
-	alert('Sorry, this game is not yet ready');
-});
 
 
 
-// Overlay Test Button
+
+// Menu Button
 
 $('#settings a').on('click', function(){
 	$('#gameover').show();
-	$('.overlay-container').toggle();
+	$('.overlay-container').fadeToggle(400);
 });
 
 
@@ -178,13 +202,20 @@ var colorTheme;
 
 
 /*////////////////////////////
-  	TicTac - Variables
+  	Global Variables
 ////////////////////////////*/
 
-
-var defineRows = 3;
-var defineCols = 3;
+var pickGame;
 var allWinningMoves = new Array;
+
+var board = {
+	rows: 3,
+	cols: 3,
+	grid: {},
+	game: 'tictac',
+	active: true,
+};
+defineGridNew();
 
 
 
@@ -198,45 +229,80 @@ var allWinningMoves = new Array;
 ////////////////////////////*/
 
 
+
+/* // Load Game
+
+	- Get "current Game"
+	- Load board
+		- get rows/columns
+		- generate 2d grid
+		- attach grid to board object
+		- 
+
+
+
+
+*/
+
+
+
+
 // Determines all possible coordinates on x/y axes
-function getGrid( numRows , numColumns ){
-	cells = new Array;
-	for (y=0; y<numRows; y++){
-		for (x=0; x<numColumns; x++){
-			cells.push( (x+1) + '-' + (y+1) );
-			console.log('x:' + x);
+
+// function getGridSize( numRows , numColumns ){
+
+// 	cells = new Array;
+// 	for (y=0; y<numRows; y++){
+// 		for (x=0; x<numColumns; x++){
+// 			cells.push( (x+1) + '-' + (y+1) );
+// 			// console.log('x:' + x);
+// 		};
+// 		// console.log('   y:' + y);
+// 	};
+// 	return cells;
+// };
+
+
+
+// // Takes array of cooridinates and adds to new object
+
+// function getCoordinates(){
+
+// 	getGridSize( board.rows , board.cols );
+// 	defineGrid = new Object;
+
+// 	for (i=0; i<cells.length; i++){
+// 		var cellName = cells[i];
+// 		defineGrid[cellName] = null;
+// 	};
+// 	board.grid = defineGrid;
+// };
+
+
+
+
+function defineGridNew(){
+
+	var arr = new Array;
+
+	for (y=0; y < board.rows; y++){
+
+		for (x=0; x < board.cols; x++){
+			arr.push( (x+1) + '-' + (y+1) );
+			// console.log('x:' + x);
 		};
-		console.log('   y:' + y);
+		// console.log('   y:' + y);
 	};
-	return cells;
-};
+	
 
-
-
-// Takes array of cooridinates and adds to new object
-function getCoordinates(){
-	getGrid( defineRows , defineCols );
-	defineGrid = new Object;
-
-	for (i=0; i<cells.length; i++){
-		var cellName = cells[i];
-		defineGrid[cellName] = null;
+	for (i=0; i < arr.length; i++){
+		board.grid[ arr[i] ] = null;
 	};
-	return defineGrid;
+
+	return board.grid;
+
 };
 
-
-
-// Define board as object to access later
-var gameboard = {
-	rows: defineRows,
-	cols: defineCols,
-	grid: getCoordinates(),
-	game: 'tictac',
-	active: true,
-};
-
-// console.log(gameboard);
 
 
 
@@ -266,9 +332,9 @@ var gameboard = {
 
 function allPossibleWins(){
 	
-	var max_x = defineCols;
-	var max_y = defineRows;
-	var gridKeys = Object.keys(gameboard.grid);
+	var max_x = board.cols;
+	var max_y = board.rows;
+	var gridKeys = Object.keys(board.grid);
 
 	for (i = 0; i<gridKeys.length; i++){
 		var coordinates = gridKeys[i];
@@ -325,13 +391,13 @@ allPossibleWins();
 
 
 function compareMoves( key ) {
-	// console.log("Does space " + gameboard.grid[ key ] + " = " + currentPlayer + " ?");
-    return gameboard.grid[ key ] == currentPlayer;
+	// console.log("Does space " + board.grid[ key ] + " = " + currentPlayer + " ?");
+    return board.grid[ key ] == currentPlayer;
 };
 
 
 
-gameboard.checkWin = function checkForWin(){
+board.checkWin = function checkForWin(){
 
 	if (currentPlayer == 'p1'){ 
 		var player = player_1;
@@ -415,7 +481,7 @@ $('div.grid-square').on('click', function(){
 		
 		// Pass selection and player name into function
 		makeMove( currentPlayer , selectedSquare );
-		gameboard.checkWin();
+		board.checkWin();
 	};
 });
 
@@ -423,7 +489,7 @@ $('div.grid-square').on('click', function(){
 
 function checkValid( check ){
 
-	if ( gameboard.grid[ check ] == null ){
+	if ( board.grid[ check ] == null ){
 		// console.log("move is good");
 		return true;
 	} else {
@@ -431,6 +497,8 @@ function checkValid( check ){
 		return false;
 	};
 };
+
+
 
 
 
@@ -461,28 +529,34 @@ A selection is generated
 
 
 
+
+
 // Random bot selection
 function botChoice(){
 	console.log('bots turn');
 	var availableMoves = new Array;
+	var arrIndex = genNum( availableMoves );
+	var selectedSquare = availableMoves[ arrIndex ];
+	var validMove = checkValid( selectedSquare );
 
-		$.each( gameboard.grid, function( key, value ) {
-			if ( gameboard.grid[ key ] == null ){
-				availableMoves.push(key);
-			}
-		});
-		var arrIndex = genNum( availableMoves );
-		var selectedSquare = availableMoves[ arrIndex ];
-		var validMove = checkValid( selectedSquare );
+
+	$.each( board.grid, function( key, value ) {
+		if ( board.grid[ key ] == null ){
+			availableMoves.push(key);
+		}
+	});
 	
-		// Is that a valid choice?
-		if ( validMove === true ){
-			
-			// Pass selection and player name into function
-			makeMove( currentPlayer , selectedSquare );
-			gameboard.checkWin( currentPlayer );
-		};
+
+	// Is that a valid choice?
+	if ( validMove === true ){
+		
+		// Pass selection and player name into function
+		makeMove( currentPlayer , selectedSquare );
+		board.checkWin( currentPlayer );
+	};
 };
+
+
 
 
 function genNum( arr ){
@@ -491,12 +565,16 @@ function genNum( arr ){
 };
 
 
+
+
 // Defines all actions that occur after a selection is made
 function makeMove( player , selectedSquare ){
 	console.log(selectedSquare);
 	$( '#' + selectedSquare ).addClass( player + '-pick');
-	gameboard.grid[ selectedSquare ] = player;
+	board.grid[ selectedSquare ] = player;
 };
+
+
 
 
 
@@ -515,13 +593,19 @@ function changeTurn(){
 
 
 
+
+
 function restartGame(){
 
-	gameboard.active = false;
+	board.active = false;
 	$('.grid-square').removeClass('p1-pick p2-pick');
 
 	// Resets each grid value to null
-	$.each( gameboard.grid, function( key, value ) {
-	  gameboard.grid[key] = null;
+	$.each( board.grid, function( key, value ) {
+	  board.grid[key] = null;
 	});
 };
+
+
+
+
