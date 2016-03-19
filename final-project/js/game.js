@@ -33,6 +33,7 @@ var board = {
 
 
 
+
 /*////////////////////////////////////////////////////////////////////////////
 
 Initialize New Game
@@ -40,18 +41,12 @@ Initialize New Game
 ////////////////////////////////////////////////////////////////////////////*/
 
 
-
-/*  Pseudo
-
-	Get "current Game"
-	Load board
-		- get rows/columns
-		- generate 2d grid
-		- attach grid to board object
-	Determine all Possible Wins
-		 
-*/
-
+function loadGame(){
+	defineGrid();
+	updateScore();
+	getAllPossibleWins();
+	currentPlayer = player_1;
+};
 
 
 // Determines all possible coordinates on x/y axes
@@ -65,16 +60,6 @@ function defineGrid(){
 		};
 	};
 };
-
-
-function loadGame(){
-	defineGrid();
-	updateScore();
-	getAllPossibleWins();
-	currentPlayer = player_1;
-};
-
-
 
 
 
@@ -158,21 +143,6 @@ Game Logic
 ////////////////////////////////////////////////////////////////////////////*/
 
 
-/*  Pseudo 
-
-	Game Loads, player 1 turn first
-	First player selects a square
-		- check if it's already chosen
-			- if it is, block choice
-		- mark square with player choice
-		- check if that's a win
-			- if not, check if it's a tie
-				- if either, display dialog overlay
-		- move complete, next turn ready
-*/
-
-
-
 // Check if selection is already taken
 function isSpaceOpen( space ){
 	if (board.grid[ space ] === null){
@@ -181,7 +151,6 @@ function isSpaceOpen( space ){
 		return false;
 	};
 };
-
 
 
 // Defines all actions that occur after a selection is made
@@ -201,7 +170,6 @@ function makeMove( select ){
 		//
 	};
 };
-
 
 
 // Gets list of all spaces still open
@@ -246,7 +214,6 @@ AI Move Selection
 ////////////////////////////////////////////////////////////////////////////*/
 
 
-
 // Randomly select one of remaining available moves
 function botChoice(){
 	var availableMoves = getAvailableMoves();
@@ -254,31 +221,6 @@ function botChoice(){
 	var botSelect = availableMoves[ randomIndex ];
 	makeMove( botSelect );
 };
-
-/*   Pseudo AI choice
-
-player 1 completes turn
-Run changeTurn() function
-
-Check if 2nd player is AI
-
-Check all grid spaces, compile list of available moves
-Store available spaces in array
-
-// Easy - random number (0 - array.length)
-// Medium - 
-// Hard - 
-
-A selection is generated
-	- check if it's already chosen
-		- if it is, block choice
-	- mark space with player choice
-	- check if that's a win
-		- if not, check if it's a tie
-			- if either, display dialog overlay
-	- move complete, next turn ready
-*/
-
 
 
 
@@ -289,17 +231,6 @@ A selection is generated
 Get All The Win Combinations
 
 ////////////////////////////////////////////////////////////////////////////*/
-
-
-/*	Pseudo 
-
-	Iterate through each grid square
-	Check if there are two moves on left/right
-	Check if there are two moves on top/bottom
-	Check if there are two moves on diagonal
-	for each, make array of winning spaces
-	create array of those combos
-*/
 
 
 function getAllPossibleWins(){
