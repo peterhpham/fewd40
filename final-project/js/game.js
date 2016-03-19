@@ -44,6 +44,7 @@ Initialize New Game
 function loadGame(){
 	defineGrid();
 	updateScore();
+	allWinningMoves = new Array;
 	getAllPossibleWins();
 	currentPlayer = player_1;
 };
@@ -135,7 +136,6 @@ function checkWin(){
 
 
 
-
 /*////////////////////////////////////////////////////////////////////////////
 
 Game Logic
@@ -187,7 +187,6 @@ function getAvailableMoves(){
 
 
 
-
 /*////////////////////////////////////////////////////////////////////////////
 
 User Move Selection
@@ -201,7 +200,6 @@ $('div.grid-square').on('click', function(){
 		makeMove( userSelect );
 	};
 });
-
 
 
 
@@ -234,55 +232,82 @@ Get All The Win Combinations
 
 
 function getAllPossibleWins(){
-	
-	var max_x = board.cols;
-	var max_y = board.rows;
-	var gridKeys = Object.keys(board.grid);
 
-	for (i = 0; i<gridKeys.length; i++){
-		var coordinates = gridKeys[i];
-		var this_x = parseInt( coordinates[0] );
-		var this_y = parseInt( coordinates[2] );
+	if(board.game == 'tictac'){
+		var winLength = 3;						// 3 in row wins
+	} else if (board.game == 'connect'){
+		var winLength = 4;						// 4 in row wins
+	}
+
+	var gridSpace = Object.keys(board.grid);	// gets all grid values
+
+	for (z = 0; z<gridSpace.length; z++){		// check each grid spot
 		
-		if ((this_x+2) <= max_x){
-			var logWin = [
-				( (this_x+0)  +  "-"  +   this_y ),
-				( (this_x+1)  +  "-"  +   this_y ),
-				( (this_x+2)  +  "-"  +   this_y )
+		var coordinates = gridSpace[z];			// returns 'x-y'
+		var x = parseInt(coordinates[0]);		// gets (x)
+		var y = parseInt(coordinates[2]);		// gets (y)
+		var i = winLength - 1;
+
+		if ((x+i) <= board.cols){
+			var logWin = [						// get horizontal wins
+				((x+0) + "-" + y),
+				((x+1) + "-" + y),
+				((x+2) + "-" + y),
+				((x+3) + "-" + y)
 			];
-			// console.log ("   "+ logWin);
+			if(board.game == 'tictac'){
+				logWin.length = 3;
+			};
+
+			// console.log ("horz:  "+ logWin);
 			allWinningMoves.push(logWin);
 		};
 
-		if ((this_y+2) <= max_y){
-			var logWin = [
-				( this_x  +  "-"  +  (this_y+0) ),
-				( this_x  +  "-"  +  (this_y+1) ),
-				( this_x  +  "-"  +  (this_y+2) )
+		if ((y+i) <= board.rows){
+			var logWin = [						// get vertical wins
+				(x + "-" + (y+0)),
+				(x + "-" + (y+1)),
+				(x + "-" + (y+2)),
+				(x + "-" + (y+3))
 			];
-			// console.log ("   "+ logWin);
+			if(board.game == 'tictac'){
+				logWin.length = 3;
+			};
+			
+			// console.log ("  vert:  "+ logWin);
 			allWinningMoves.push(logWin);
 		};
 
-		if ( (this_x+2) <= max_x && (this_y+2) <= max_y ){
-			var logWin = [
-				( this_x+0  +  "-"  +  (this_y+0) ),
-				( this_x+1  +  "-"  +  (this_y+1) ),
-				( this_x+2  +  "-"  +  (this_y+2) )
+		if ((x+i) <= board.cols && (y+i) <= board.rows){
+			var logWin = [						// get diagonal wins
+				(x+0 + "-" + (y+0)),
+				(x+1 + "-" + (y+1)),
+				(x+2 + "-" + (y+2)),
+				(x+3 + "-" + (y+3))
 			];
-			// console.log ("   "+ logWin);
+			if(board.game == 'tictac'){
+				logWin.length = 3;
+			};
+			
+			// console.log ("    diag1:  "+ logWin);
 			allWinningMoves.push(logWin);
 		};
 
-		if ( (this_x-2) >= 1 && (this_y+2) <= max_y ){
-			var logWin = [
-				( this_x-0  +  "-"  +  (this_y+0) ),
-				( this_x-1  +  "-"  +  (this_y+1) ),
-				( this_x-2  +  "-"  +  (this_y+2) )
+		if ((x-i) >= 1 && (y+i) <= board.rows){
+			var logWin = [						// get other diagonal wins
+				(x-0 + "-" + (y+0)),
+				(x-1 + "-" + (y+1)),
+				(x-2 + "-" + (y+2)),
+				(x-3 + "-" + (y+3))
 			];
-			// console.log ("   "+ logWin);
+			if(board.game == 'tictac'){
+				logWin.length = 3;
+			};
+
+			// console.log ("    diag2:  "+ logWin);
 			allWinningMoves.push(logWin);
 		};
 	};
+
 };
 
