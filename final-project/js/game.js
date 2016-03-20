@@ -1,6 +1,3 @@
-
-
-
 /*////////////////////////////////////////////////////////////////////////////
 
 Global Variables
@@ -23,8 +20,8 @@ var player_2 = {
 };
 
 var board = {
-	rows: 3,
-	cols: 3,
+	rows: 0,
+	cols: 0,
 	grid: {},
 	game: 'tictac',
 	active: true,
@@ -47,12 +44,13 @@ function loadGame(){
 	allWinningMoves = new Array;
 	getAllPossibleWins();
 	currentPlayer = player_1;
+	restartGame();
 };
 
 
 // Determines all possible coordinates on x/y axes
 function defineGrid(){
-
+	console.log(board.cols +'x'+ board.rows);
 	for (y=1; y <= board.rows; y++){
 		for (x=1; x <= board.cols; x++){
 			// Add coordinate x-y to grid object
@@ -92,12 +90,10 @@ function updateScore(){
 
 
 function restartGame(){
-	board.active = false;
-	$('.grid-square').removeClass('p1-pick p2-pick');
-
+	$('.tictac-square').removeClass('p1-pick p2-pick');
 	// Resets each grid value to null
 	$.each( board.grid, function( key, value ) {
-	  board.grid[key] = null;
+		board.grid[key] = null;
 	});
 };
 
@@ -138,9 +134,10 @@ function checkWin(){
 
 /*////////////////////////////////////////////////////////////////////////////
 
-Game Logic
+Move Selection Functions
 
 ////////////////////////////////////////////////////////////////////////////*/
+
 
 
 // Check if selection is already taken
@@ -152,19 +149,36 @@ function isSpaceOpen( space ){
 	};
 };
 
+// Check if connect column is full
+function isColumnFull( space ){
+
+	var x = space;
+	var y = 1;
+	var columnTop = x + '-' + y;
+
+	if (board.grid[ columnTop ] === null){
+		return false;
+	} else {
+		return true;
+	};
+};
+
 
 // Defines all actions that occur after a selection is made
 function makeMove( select ){
 
 	if (board.game === 'tictac'){
-		console.log('functon makeMove()');
-		// Applies xo symbol to space, update board object
-		$( '#' + select ).addClass( currentPlayer.id + '-pick');
+
+		// Applies x/o symbol to space, update board object
+		$('#'+select + '.tictac-square').addClass( currentPlayer.id + '-pick');
 		board.grid[ select ] = currentPlayer.id;
 		checkWin();
 	};
 	if (board.game === 'connect'){
-		//
+	
+		$('#'+select + '.connect-square').addClass( currentPlayer.id + '-pick');
+		board.grid[ select ] = currentPlayer.id;
+		checkWin();
 	};
 	if (board.game === 'checkers'){
 		//
@@ -194,13 +208,49 @@ User Move Selection
 ////////////////////////////////////////////////////////////////////////////*/
 
 
-$('div.grid-square').on('click', function(){
+// Tic Tac Toe
+$('div.tictac-square').on('click', function(){
 	var userSelect = $(this).attr('id');
 	if (isSpaceOpen( userSelect ) === true ){
 		makeMove( userSelect );
 	};
 });
 
+
+// Connect4 mouse events
+$('div.column-select').hover(function(){
+	userColumnSelect = $(this).attr('id');
+
+		$.each( board.grid, function( key, value ){
+			if (key.includes(userColumnSelect+'-') === true){
+				$(('#'+key) + ('.connect-square')).css('background-color','#fafafa');
+			};
+		});
+
+	}, function(){
+		$.each( board.grid, function( key, value ){
+			if (key.includes(userColumnSelect+'-') === true){
+				$(('#'+key) + ('.connect-square')).css('background-color','#fff');
+			};
+		});
+
+	}
+);
+
+$('div.column-select').on('click', function(){
+	
+	if (isColumnFull( userColumnSelect ) !== true ){
+
+		for (i=board.rows; i>=1; i--) {
+			var check = userColumnSelect + '-' + i;
+
+			if (isSpaceOpen( check ) === true ){
+				makeMove( check );
+				break;
+			};
+		};
+	};
+});
 
 
 
@@ -242,7 +292,7 @@ function getAllPossibleWins(){
 	var gridSpace = Object.keys(board.grid);	// gets all grid values
 
 	for (z = 0; z<gridSpace.length; z++){		// check each grid spot
-		
+
 		var coordinates = gridSpace[z];			// returns 'x-y'
 		var x = parseInt(coordinates[0]);		// gets (x)
 		var y = parseInt(coordinates[2]);		// gets (y)
@@ -310,4 +360,8 @@ function getAllPossibleWins(){
 	};
 
 };
+
+
+
+
 

@@ -56,18 +56,31 @@ body{
 	height: 33%;
 	display: flex;
 }
-
-.grid-square{
+.connect-square,
+.tictac-square{
 	flex: 1;
 	min-width: 80px;
 	display: inline-block;
 	border: 1px solid #eee;
 }
 
-.grid-square:hover{
+.tictac-square:hover{
 	background-color: #eee;
 }
 
+.column-select{
+	flex: 1;
+	min-width: 80px;
+	display: inline-block;
+	border: 1px solid #eee;
+    background:
+     url(../images/sprite-o.svg)    /* image */
+     center / 40% 40% 				/* position / size */
+     no-repeat;
+}
+.column-select:hover{
+	background-color: pink;
+}
 .p1-pick {
 	background:
      url(../images/sprite-x.svg)    /* image */

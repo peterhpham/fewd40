@@ -23,56 +23,35 @@ Menu Flow Control
 
 
 $('#welcome').delay(400).fadeIn(600).delay(600).fadeOut(600);
-$('#intro').delay(2200).fadeIn(600);
-// $('#intro').show();
-
-
-
-
-
-// Intro games list 
-$('#choose-tictac').on('click', function(){
-	$('#intro').delay(200).fadeOut(200);
-	$('#choose-players').delay(600).fadeIn(200);
-	chosenGame = '#tictac';
-});
-
-$('#choose-connect').on('click', function(){
-	chosenGame = '#connect';
-	$('#intro').delay(200).fadeOut(200);
-	$(chosenGame).delay(400).fadeIn(200);
-});
-
-$('#choose-checkers').on('click', function(){
-	alert('Sorry, this game is not yet ready');
-	chosenGame = '#checkers';
-});
-
-
+$('#game-list').delay(2200).fadeIn(600);
 
 
 
 // New games list menu
-$('#new-tictac').on('click', function(){
-	chosenGame = '#tictac';
+$('#choose-tictac').on('click', function(){
+	board.cols = 3;
+	board.rows = 3;
+	board.game = 'tictac';
+
 	$('#game-list').fadeOut(200);
-	$(chosenGame).delay(200).fadeIn(200);
-	restartGame();
+	$('#'+board.game).delay(200).fadeIn(200);
+	loadGame();
 });
 
-$('#new-connect').on('click', function(){
-	chosenGame = '#connect';
+$('#choose-connect').on('click', function(){
+	board.cols = 5;
+	board.rows = 5;
+	board.game = 'connect';
+
 	$('#game-list').fadeOut(200);
-	$(chosenGame).delay(200).fadeIn(200);
-	restartGame();
+	$('#'+board.game).delay(200).fadeIn(200);
+	loadGame();
 });
 
-$('#new-checkers').on('click', function(){
-	chosenGame = '#checkers';
+$('#choose-checkers').on('click', function(){
+	board.game = 'checkers';
 	alert('Sorry, this game is not yet ready');
 });
-
-
 
 
 
@@ -92,9 +71,7 @@ $('#two-player').on('click', function(){
 
 
 
-
-
-// Enter player names
+// Enter name for 1 player
 
 $('#names-1 :submit').on('click', function(){
 	
@@ -110,13 +87,13 @@ $('#names-1 :submit').on('click', function(){
 
 		$('#names-1').delay(200).fadeOut(200);
 		$('#score').delay(400).fadeIn(200);
-		$(chosenGame).delay(400).fadeIn(200);
+		$('#'+board.game).delay(400).fadeIn(200);
 	};
 });
 
 
 
-
+// Enter name for 2 player
 
 $('#names-2 :submit').on('click', function(){
 
@@ -141,11 +118,9 @@ $('#names-2 :submit').on('click', function(){
 
 		$('#names-2').delay(200).fadeOut(200);
 		$('#score').delay(400).fadeIn(200);
-		$(chosenGame).delay(400).fadeIn(200);
+		$('#'+board.game).delay(400).fadeIn(200);
 	};
 });
-
-
 
 
 
@@ -179,3 +154,9 @@ $('#settings a').on('click', function(){
 	$('#gameover').show();
 	$('.overlay-container').fadeToggle(400);
 });
+
+
+
+
+
+
