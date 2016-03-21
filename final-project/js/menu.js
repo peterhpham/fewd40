@@ -21,10 +21,11 @@ Menu Flow Control
 ////////////////////////////////////////////////////////////////////////////*/
 
 
+// Logotype fade in/out
 
 $('#welcome').delay(400).fadeIn(600).delay(600).fadeOut(600);
 $('#game-list').delay(2200).fadeIn(600);
-
+var isNewGame = true;
 
 
 // New games list menu
@@ -32,26 +33,50 @@ $('#choose-tictac').on('click', function(){
 	board.cols = 3;
 	board.rows = 3;
 	board.game = 'tictac';
-
-	$('#game-list').fadeOut(200);
-	$('#'+board.game).delay(200).fadeIn(200);
 	loadGame();
+
+	if(isNewGame === false){
+		$('#game-list').fadeOut(200);
+		$('#'+board.game).delay(200).fadeIn(200);
+	} else {
+		$('#game-list').fadeOut(200);
+		$('#choose-players').delay(600).fadeIn(200);
+		isNewGame = false;
+	}
 });
 
 $('#choose-connect').on('click', function(){
 	board.cols = 5;
 	board.rows = 5;
 	board.game = 'connect';
-
-	$('#game-list').fadeOut(200);
-	$('#'+board.game).delay(200).fadeIn(200);
 	loadGame();
+
+	if(isNewGame === false){
+		$('#game-list').fadeOut(200);
+		$('#'+board.game).delay(200).fadeIn(200);
+	} else {
+		$('#game-list').fadeOut(200);
+		$('#choose-players').delay(600).fadeIn(200);
+		isNewGame = false;
+	}
 });
 
 $('#choose-checkers').on('click', function(){
 	board.game = 'checkers';
 	alert('Sorry, this game is not yet ready');
 });
+
+
+
+
+
+
+
+/*////////////////////////////////////////////////////////////////////////////
+
+Player Options
+
+////////////////////////////////////////////////////////////////////////////*/
 
 
 
@@ -124,20 +149,6 @@ $('#names-2 :submit').on('click', function(){
 
 
 
-// Win screen options
-
-$('#replay-tictac').on('click', function(){
-	$('.overlay-container').fadeOut(300);
-	restartGame();
-});
-
-$('#different-game').on('click', function(){
-	$('.overlay-container').toggle();
-	$('.board-wrap').hide();
-	$('#game-list').fadeIn(300);
-});
-
-
 
 
 
@@ -155,6 +166,20 @@ $('#settings a').on('click', function(){
 	$('.overlay-container').fadeToggle(400);
 });
 
+
+
+// Win screen options
+
+$('#play-again').on('click', function(){
+	$('.overlay-container').fadeOut(300);
+	restartGame();
+});
+
+$('#different-game').on('click', function(){
+	$('.overlay-container').toggle();
+	$('.board-wrap').hide();
+	$('#game-list').fadeIn(300);
+});
 
 
 

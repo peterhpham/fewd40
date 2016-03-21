@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Grid Games</title>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,800' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -82,8 +83,9 @@
 		</div>
 
 
-
 		<div id="connect" class="board-wrap">
+			<div id="move-circle-p1"></div>
+			<div id="move-circle-p2"></div>
 			<div class="board">
 				<div class="row">
 					<div id="1" class="column-select"></div>
@@ -149,20 +151,11 @@
 
 			<div id="gameover" class="menu">
 				<div id="winner-text">
-					<h1>Player 1 wins</h1>
+					<h1>Winning Text</h1>
 				</div>
 				<ul>
-					<a href=""><li id="replay-tictac"><h1>play again</h1></li></a>
+					<a href=""><li id="play-again"><h1>play again</h1></li></a>
 					<a href=""><li id="different-game"><h1>different game</h1></li></a>
-				</ul>
-			</div>	
-
-			<div id="gameodsr" class="menu">
-				<h3>PICK A GAME</h3>
-				<ul>
-					<a href=""><li id="choose-tictac"><h1>tic-tac-toe</h1></li></a>
-					<a href=""><li id="choose-connect"><h1>connect four</h1></li></a>
-					<a href=""><li id="choose-checkers"><h1>checkers</h1></li></a>
 				</ul>
 			</div>	
 
@@ -170,9 +163,8 @@
 		</div>
 	</div>
 
-
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="./js/menu.js"></script>
 	<script type="text/javascript" src="./js/game.js"></script>
 		

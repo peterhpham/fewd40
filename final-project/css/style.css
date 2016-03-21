@@ -72,27 +72,52 @@ body{
 	flex: 1;
 	min-width: 80px;
 	display: inline-block;
-	border: 1px solid #eee;
     background:
      url(../images/sprite-o.svg)    /* image */
      center / 40% 40% 				/* position / size */
      no-repeat;
+	background-color: #ddd;
 }
 .column-select:hover{
 	background-color: pink;
 }
-.p1-pick {
+.p1-tictac {
 	background:
      url(../images/sprite-x.svg)    /* image */
      center / 80% 80% 				/* position / size */
      no-repeat;                		/* repeat */
 }
 
-.p2-pick {
+.p2-tictac {
 	background:
      url(../images/sprite-o.svg)    /* image */
      center / 80% 80% 				/* position / size */
      no-repeat;                		/* repeat */
+}
+#move-circle-p1,
+.p1-connect {
+	background:
+     url(../images/connect-p1.svg)    /* image */
+     center / 80% 80% 				/* position / size */
+     no-repeat;                		/* repeat */
+}
+
+#move-circle-p2,
+.p2-connect {
+	background:
+     url(../images/connect-p2.svg)    /* image */
+     center / 80% 80% 				/* position / size */
+     no-repeat;                		/* repeat */
+}
+#move-circle-p1,
+#move-circle-p2 {
+	height:80px;
+	width:80px;
+	position: absolute;
+	float: left;
+	display: inline-block;
+	left: -1000px;
+	top: -1000px;
 }
 
 #winner-text{

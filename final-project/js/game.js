@@ -26,6 +26,7 @@ var board = {
 	game: 'tictac',
 	active: true,
 };
+var activeAnimation = false;
 
 
 
@@ -90,7 +91,9 @@ function updateScore(){
 
 
 function restartGame(){
-	$('.tictac-square').removeClass('p1-pick p2-pick');
+	$('.tictac-square, .connect-square').removeClass('p1-tictac p2-tictac');
+	$('.connect-square, .connect-square').removeClass('p1-connect p2-connect');
+
 	// Resets each grid value to null
 	$.each( board.grid, function( key, value ) {
 		board.grid[key] = null;
@@ -101,14 +104,17 @@ function restartGame(){
 function togglePlayers(){
 	if (currentPlayer == player_2){
 		currentPlayer = player_1;
+		console.log('now Player 1\'s turn');
 
 	} else if (currentPlayer == player_1){
 		currentPlayer = player_2;
+		console.log('now Player 2\'s turn');
 
 		if (player_2.ai === true){
-			var timeoutID = window.setTimeout(botChoice, 200);
+			var timeoutID = window.setTimeout(botChoice, 100);
 		};
-	};
+	}; 
+	console.log('   Current player = : ' + currentPlayer.id);
 };
 
 
@@ -127,6 +133,26 @@ function checkWin(){
 	togglePlayers();
 	return false;
 };
+
+
+function getStartPoint( column , player ){
+	// debugger;
+	// offset for object center point
+	circleW = $('#move-circle-' + player).width()/2; 
+	circleH = $('#move-circle-' + player).height()/2;
+
+	//Calculate starting point
+	var startPoint = $('#'+column).offset();
+	startX = startPoint.left + $('#'+column).width()/2 - circleW;
+	startY = startPoint.top + $('#'+column).height()/2 - circleH - 70;
+
+	if (activeAnimation === false){
+		$('#move-circle-' + player).offset({ top: startY, left: startX });
+		// $('#move-circle-' + currentPlayer.id).addClass(currentPlayer.id + '-connect');
+	};
+};
+
+
 
 
 
@@ -149,6 +175,19 @@ function isSpaceOpen( space ){
 	};
 };
 
+
+// Gets list of all spaces still open
+function getAvailableMoves(){
+	var arr = new Array;
+	$.each( board.grid, function( key, value ){
+		if ( board.grid[key] == null ){
+			arr.push(key);
+		};
+	});
+	return arr;
+};
+
+
 // Check if connect column is full
 function isColumnFull( space ){
 
@@ -164,38 +203,95 @@ function isColumnFull( space ){
 };
 
 
+// Finds next open space in column stack
+function getNextOpenSpace( column ){
+	if (isColumnFull( column ) !== true ){
+		for (i=board.rows; i>=1; i--) {
+			var check = column + '-' + i;
+			if (isSpaceOpen( check ) === true ){
+				return check;
+				break;
+			};
+		};
+	};
+};
+
+
 // Defines all actions that occur after a selection is made
 function makeMove( select ){
-
-	if (board.game === 'tictac'){
-
-		// Applies x/o symbol to space, update board object
-		$('#'+select + '.tictac-square').addClass( currentPlayer.id + '-pick');
-		board.grid[ select ] = currentPlayer.id;
-		checkWin();
-	};
-	if (board.game === 'connect'){
 	
-		$('#'+select + '.connect-square').addClass( currentPlayer.id + '-pick');
+	// TicTacToe - Applies x/o symbol to space, update board object
+	if (board.game === 'tictac'){
+		$('#'+select + '.tictac-square').addClass( currentPlayer.id + '-tictac');
 		board.grid[ select ] = currentPlayer.id;
 		checkWin();
 	};
+	
+	// Connect Four - Applies x/o symbol to space, update board object
+	if (board.game === 'connect'){
+		$('#'+select + '.connect-square').addClass( currentPlayer.id + '-connect');
+		board.grid[ select ] = currentPlayer.id;
+		checkWin();
+	};
+	
+	// Checkers
 	if (board.game === 'checkers'){
 		//
 	};
 };
 
 
-// Gets list of all spaces still open
-function getAvailableMoves(){
-	var arr = new Array;
+
+
+
+
+
+/*////////////////////////////////////////////////////////////////////////////
+
+Connect 4 Functions
+
+////////////////////////////////////////////////////////////////////////////*/
+
+
+// Animate chip falling into place
+function animateSelection( column ){
+
+	var space = getNextOpenSpace( column );
+	getStartPoint( column , currentPlayer.id );
+	activeAnimation = true;
+
+	//Calculate end point
+	var endPoint = $('#'+space+'.connect-square').offset();
+	endY = endPoint.top + ( $('#'+space+'.connect-square').height()/2 + circleH);
+
+	//Compare distance for travel
+	travelY = endY - startY;
+
+	$('#move-circle-' + currentPlayer.id).animate({
+		top: travelY
+		}, 1000, 'easeOutExpo', function() { 
+			console.log('Animation complete');
+			$('#move-circle-' + currentPlayer.id).offset({ top: -1000, left: -1000 });
+			activeAnimation = false;
+			makeMove(space);
+			// $('#moving').attr('id','move-circle') + currentPlayer.id;
+		}
+	);
+};
+
+
+function highlightColumn( column, color ){
+
+	// Find all grid[keys] that share same "x-" value
 	$.each( board.grid, function( key, value ){
-		if ( board.grid[key] == null ){
-			arr.push(key);
+
+		if (key.includes(column + '-') === true){
+			$(('#'+key) + ('.connect-square')).css('background-color',color);
 		};
 	});
-	return arr;
 };
+
+
 
 
 
@@ -217,40 +313,29 @@ $('div.tictac-square').on('click', function(){
 });
 
 
-// Connect4 mouse events
-$('div.column-select').hover(function(){
-	userColumnSelect = $(this).attr('id');
 
-		$.each( board.grid, function( key, value ){
-			if (key.includes(userColumnSelect+'-') === true){
-				$(('#'+key) + ('.connect-square')).css('background-color','#fafafa');
-			};
-		});
+// Connect4 column hover
+$('div.column-select').hover(
+	function(){	// on mouseover
+		columnSelect = $(this).attr('id');
+		highlightColumn( columnSelect , '#fafafa' );
+		getStartPoint( columnSelect , 'p1' );
 
-	}, function(){
-		$.each( board.grid, function( key, value ){
-			if (key.includes(userColumnSelect+'-') === true){
-				$(('#'+key) + ('.connect-square')).css('background-color','#fff');
-			};
-		});
-
+	}, function(){	// on mouseout
+		highlightColumn( columnSelect , '#fff' );
 	}
 );
 
+
+
+// Connect4 column click
 $('div.column-select').on('click', function(){
-	
-	if (isColumnFull( userColumnSelect ) !== true ){
-
-		for (i=board.rows; i>=1; i--) {
-			var check = userColumnSelect + '-' + i;
-
-			if (isSpaceOpen( check ) === true ){
-				makeMove( check );
-				break;
-			};
-		};
-	};
+	animateSelection( columnSelect );
 });
+
+
+
+
 
 
 
@@ -264,10 +349,24 @@ AI Move Selection
 
 // Randomly select one of remaining available moves
 function botChoice(){
-	var availableMoves = getAvailableMoves();
-	var randomIndex = Math.floor( Math.random() * availableMoves.length );
-	var botSelect = availableMoves[ randomIndex ];
-	makeMove( botSelect );
+
+	if (board.game === 'tictac'){
+		var availableMoves = getAvailableMoves();
+		var randomIndex = Math.floor( Math.random() * availableMoves.length );
+		var botSelect = availableMoves[ randomIndex ];
+		makeMove( botSelect );
+	};
+
+	if (board.game === 'connect'){
+		console.log('connect bot');
+		var randomIndex = Math.ceil( Math.random() * board.cols );
+		animateSelection( randomIndex );
+	};
+
+	if (board.game === 'checkers'){
+		//
+	};
+
 };
 
 
