@@ -40,6 +40,7 @@ Initialize New Game
 
 
 function loadGame(){
+	// changeBackground();
 	defineGrid();
 	updateScore();
 	allWinningMoves = new Array;
@@ -51,7 +52,7 @@ function loadGame(){
 
 // Determines all possible coordinates on x/y axes
 function defineGrid(){
-	console.log(board.cols +'x'+ board.rows);
+	
 	for (y=1; y <= board.rows; y++){
 		for (x=1; x <= board.cols; x++){
 			// Add coordinate x-y to grid object
@@ -61,7 +62,9 @@ function defineGrid(){
 	};
 };
 
-
+// function changeBackground(){
+	// $('body').css( 'background-color' , '#25264C' );
+// }
 
 
 
@@ -91,8 +94,8 @@ function updateScore(){
 
 
 function restartGame(){
-	$('.tictac-square, .connect-square').removeClass('p1-tictac p2-tictac');
-	$('.connect-square, .connect-square').removeClass('p1-connect p2-connect');
+	$('.tictac-square').removeClass('p1-tictac p2-tictac');
+	$('.connect-square').removeClass('p1-connect p2-connect p1-connect-temp');
 
 	// Resets each grid value to null
 	$.each( board.grid, function( key, value ) {
@@ -104,17 +107,14 @@ function restartGame(){
 function togglePlayers(){
 	if (currentPlayer == player_2){
 		currentPlayer = player_1;
-		console.log('now Player 1\'s turn');
 
 	} else if (currentPlayer == player_1){
 		currentPlayer = player_2;
-		console.log('now Player 2\'s turn');
 
 		if (player_2.ai === true){
 			var timeoutID = window.setTimeout(botChoice, 100);
 		};
 	}; 
-	console.log('   Current player = : ' + currentPlayer.id);
 };
 
 
@@ -136,19 +136,21 @@ function checkWin(){
 
 
 function getStartPoint( column , player ){
-	// debugger;
-	// offset for object center point
-	circleW = $('#move-circle-' + player).width()/2; 
-	circleH = $('#move-circle-' + player).height()/2;
+	
+	var newW = $('.connect-square').width();
+	var newH = $('.connect-square').height();
+	$('#move-circle-p1').width(newW).height(newH);
+	$('#move-circle-p2').width(newW).height(newH);
 
 	//Calculate starting point
 	var startPoint = $('#'+column).offset();
-	startX = startPoint.left + $('#'+column).width()/2 - circleW;
-	startY = startPoint.top + $('#'+column).height()/2 - circleH - 70;
+	startX = startPoint.left;
+	startY = startPoint.top;
 
-	if (activeAnimation === false){
-		$('#move-circle-' + player).offset({ top: startY, left: startX });
-		// $('#move-circle-' + currentPlayer.id).addClass(currentPlayer.id + '-connect');
+	if (activeAnimation == false){
+		console.log('activeAnimation was false');
+		$('#move-circle-' + player).offset({ top: startY-88, left: startX });
+
 	};
 };
 
@@ -262,19 +264,17 @@ function animateSelection( column ){
 
 	//Calculate end point
 	var endPoint = $('#'+space+'.connect-square').offset();
-	endY = endPoint.top + ( $('#'+space+'.connect-square').height()/2 + circleH);
-
-	//Compare distance for travel
-	travelY = endY - startY;
-
+	endY = endPoint.top;
+	
+	$('#move-circle-' + currentPlayer.id).css('visibility','visible');
 	$('#move-circle-' + currentPlayer.id).animate({
-		top: travelY
+		top: endY
 		}, 1000, 'easeOutExpo', function() { 
-			console.log('Animation complete');
 			$('#move-circle-' + currentPlayer.id).offset({ top: -1000, left: -1000 });
+			$('#move-circle-' + currentPlayer.id).css('visibility','hidden');
 			activeAnimation = false;
 			makeMove(space);
-			// $('#moving').attr('id','move-circle') + currentPlayer.id;
+			
 		}
 	);
 };
@@ -286,7 +286,7 @@ function highlightColumn( column, color ){
 	$.each( board.grid, function( key, value ){
 
 		if (key.includes(column + '-') === true){
-			$(('#'+key) + ('.connect-square')).css('background-color',color);
+			$(('#'+key) + ('.connect-square')).css('background',color);
 		};
 	});
 };
@@ -318,11 +318,15 @@ $('div.tictac-square').on('click', function(){
 $('div.column-select').hover(
 	function(){	// on mouseover
 		columnSelect = $(this).attr('id');
-		highlightColumn( columnSelect , '#fafafa' );
 		getStartPoint( columnSelect , 'p1' );
+		$('#move-circle-p1').css('visibility','visible');
+
+		var space = getNextOpenSpace( columnSelect );
+		$('#' + space + '.connect-square').addClass('p1-connect-temp');
 
 	}, function(){	// on mouseout
-		highlightColumn( columnSelect , '#fff' );
+		var space = getNextOpenSpace( columnSelect );
+		$('#' + space + '.connect-square').removeClass('p1-connect-temp');
 	}
 );
 
@@ -358,7 +362,6 @@ function botChoice(){
 	};
 
 	if (board.game === 'connect'){
-		console.log('connect bot');
 		var randomIndex = Math.ceil( Math.random() * board.cols );
 		animateSelection( randomIndex );
 	};

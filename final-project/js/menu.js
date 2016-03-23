@@ -34,6 +34,7 @@ $('#choose-tictac').on('click', function(){
 	board.rows = 3;
 	board.game = 'tictac';
 	loadGame();
+	
 
 	if(isNewGame === false){
 		$('#game-list').fadeOut(200);
@@ -106,8 +107,8 @@ $('#names-1 :submit').on('click', function(){
 		player_2.name = 'computer';
 		player_2.ai = true;
 		
-		$('#score').html("<h3>" + player_1.name + ": <span id=\"p1-score\"></span></h3>");
-		$('#score').append("<h3>" + player_2.name + ": <span id=\"p2-score\"></span></h3>");
+		$('#player1-name').html(player_1.name);
+		$('#player2-name').html(player_2.name);
 		updateScore();
 
 		$('#names-1').delay(200).fadeOut(200);
@@ -137,8 +138,8 @@ $('#names-2 :submit').on('click', function(){
 		player_2.name = $('#names-2 #p2-name').val().toLowerCase();
 		player_2.ai = false;
 
-		$('#score').html("<h3>" + player_1.name + ": <span id=\"p1-score\"></span></h3>");
-		$('#score').append("<h3>" + player_2.name + ": <span id=\"p2-score\"></span></h3>");
+		$('#player1-name').html(player_1.name);
+		$('#player2-name').html(player_2.name);
 		updateScore();
 
 		$('#names-2').delay(200).fadeOut(200);
@@ -161,7 +162,7 @@ Additional Menu Options
 
 // Menu Button
 
-$('#settings a').on('click', function(){
+$('#menu-button a').on('click', function(){
 	$('#gameover').show();
 	$('.overlay-container').fadeToggle(400);
 });
