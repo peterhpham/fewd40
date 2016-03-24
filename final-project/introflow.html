@@ -55,6 +55,7 @@
 		</div>
 
 		<div id="tictac" class="board-wrap">
+			
 			<div class="board">
 				<div class="row">
 					<div id="1-1" class="tictac-square"></div>
@@ -72,13 +73,19 @@
 					<div id="3-3" class="tictac-square"></div>
 				</div>
 			</div>
+			<div id="score" class="row score">
+				<ul>
+					<li> <span class="player1-name">Player 1: </span> <span class="player1-score">0</span> </li>
+					<li> <span class="player2-name">Player 1: </span> <span class="player2-score">0</span> </li>
+				</ul>
+			</div>
 		</div>
 
 
 		<div id="connect" class="board-wrap">
 			<div id="move-circle-p1"></div>
 			<div id="move-circle-p2"></div>
-			
+				
 				<div class="column-select-row">
 					<div id="1" class="column-select"></div>
 					<div id="2" class="column-select"></div>
@@ -125,6 +132,12 @@
 					</div>
 				<!-- </div> -->
 			</div>
+			<div id="score" class="row">
+				<ul>
+					<li> <span class="player1-name">Player 1: </span> <span class="player1-score">0</span> </li>
+					<li> <span class="player2-name">Player 1: </span> <span class="player2-score">0</span> </li>
+				</ul>
+			</div>
 		</div>
 
 
@@ -134,13 +147,17 @@
 
 
 	<div class="container hud">
-		<div id="menu-button"><a href=""><img src="images/sprite-menu.svg" width="80%" height="80%"></a></div>
-		<div id="score" class="menu">
-			<ul>
-				<li> <span id="player1-name">Player 1: </span> <span id="p1-score">0</span> </li>
-				<li> <span id="player2-name">Player 1: </span> <span id="p2-score">0</span> </li>
-			</ul>
+		<div id="play-again" class="row">
+			<a href=""><span>play again</span></a>
 		</div>
+		<div id="menu-button"><a href=""><img src="images/sprite-menu.svg" width="80%" height="80%"></a></div>
+	</div>
+
+
+
+	<div class="footer">
+		<span id="player1-name">Player 1: </span>
+		<span id="player2-name">Player 1: </span>
 	</div>
 
 
@@ -151,14 +168,33 @@
 
 			<div id="gameover" class="menu">
 				<div id="winner-text">
-					<h1>Winning Text</h1>
-				</div>
-				<ul>
-					<a href=""><li id="settings"><h1>settings</h1></li></a>
-					<a href=""><li id="play-again"><h1>play again</h1></li></a>
-					<a href=""><li id="different-game"><h1>different game</h1></li></a>
-				</ul>
-			</div>	
+					<h3>SETTINGS</h3>
+				
+				
+					<a href="" id="settings-games"><h1>new game</h1></a>
+				
+					<a href="" id="settings-players"><h1># of players</h1></a>
+					<div id="" class="dropdown">
+						<ul>
+							<a href=""><li id="change-1p"><h1>one player</h1></li></a>
+							<a href=""><li id="change-2p"><h1>two players</h1></li></a>
+						</ul>
+					</div>
+
+					<a href="" id="settings-names"><h1>change names</h1></a>
+					<div id="" class="dropdown">
+						<form>
+							<h3>PLAYER 1</h3>
+							<input type="text" id="change-p1-name" placeholder="enter name" required autofocus>
+							<h3>PLAYER 2</h3>
+							<input type="text" id="change-p2-name" placeholder="enter name" required>
+							<input type="submit" id="submit-names" style="display:none">
+						</form>
+					</div>
+					<a href=""><div id="save-settings">save changes</div></a>
+				
+				</div>	
+			</div>
 
 
 		</div>

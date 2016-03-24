@@ -88,14 +88,20 @@ function displayWinner(){
 
 
 function updateScore(){
-	$('#p1-score').html(player_1.score);
-	$('#p2-score').html(player_2.score);
+	$('.player1-score').html(player_1.score);
+	$('.player2-score').html(player_2.score);
 };
 
+function showWinCombo(arr){
+	var winningKeys = arr;
+	for (i=0; i<winningKeys.length; i++){
+		$('#' + winningKeys[i]).addClass('flash');
+	}
 
+}
 function restartGame(){
-	$('.tictac-square').removeClass('p1-tictac p2-tictac');
-	$('.connect-square').removeClass('p1-connect p2-connect p1-connect-temp');
+	$('.tictac-square').removeClass('p1-tictac p2-tictac flash');
+	$('.connect-square').removeClass('p1-connect p2-connect p1-connect-temp flash');
 
 	// Resets each grid value to null
 	$.each( board.grid, function( key, value ) {
@@ -124,9 +130,12 @@ function checkWin(){
 		var win = allWinningMoves[i].every(compareMoves);
 		if (win === true) {
 			currentPlayer.score++;
-			displayWinner();
+			showWinCombo(allWinningMoves[i]);
+			$('#play-again span').delay(600).fadeIn(400);
+
+			// displayWinner();
 			updateScore();
-			restartGame();
+			// restartGame();
 			break;
 		};
 	};
@@ -200,6 +209,7 @@ function isColumnFull( space ){
 	if (board.grid[ columnTop ] === null){
 		return false;
 	} else {
+		resetColSelect();
 		return true;
 	};
 };
@@ -319,14 +329,25 @@ $('div.column-select').hover(
 	function(){	// on mouseover
 		columnSelect = $(this).attr('id');
 		getStartPoint( columnSelect , 'p1' );
-		$('#move-circle-p1').css('visibility','visible');
+		
+
+		if (activeAnimation === false){
+			$('#move-circle-p1').css('visibility','visible')
+			.addClass('pulse');
+		};
+
 
 		var space = getNextOpenSpace( columnSelect );
 		$('#' + space + '.connect-square').addClass('p1-connect-temp');
 
-	}, function(){	// on mouseout
+	}, function resetColSelect(){	// on mouseout
 		var space = getNextOpenSpace( columnSelect );
 		$('#' + space + '.connect-square').removeClass('p1-connect-temp');
+		if (activeAnimation === false){
+			$('#move-circle-' + currentPlayer.id)
+				.removeClass('pulse')
+				.offset({ top: -1000, left: -1000 });
+		};
 	}
 );
 
@@ -335,6 +356,7 @@ $('div.column-select').hover(
 // Connect4 column click
 $('div.column-select').on('click', function(){
 	animateSelection( columnSelect );
+	$('#move-circle-' + currentPlayer.id).removeClass('pulse');
 });
 
 

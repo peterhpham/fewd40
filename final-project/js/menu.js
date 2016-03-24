@@ -26,7 +26,7 @@ Menu Flow Control
 $('#welcome').delay(400).fadeIn(600).delay(600).fadeOut(600);
 $('#game-list').delay(2200).fadeIn(600);
 var isNewGame = true;
-
+var changePlayers;
 
 // New games list menu
 $('#choose-tictac').on('click', function(){
@@ -81,6 +81,14 @@ Player Options
 
 
 
+// Show Names
+function toggleNames(){
+	$('.player1-name').delay(1000).fadeToggle(800);
+	$('.player2-name').delay(1000).fadeToggle(800);
+	$('.player1-score').delay(1000).fadeToggle(800);
+	$('.player2-score').delay(1000).fadeToggle(800);
+}
+
 // Choose 1 or 2 players
 
 $('#one-player').on('click', function(){
@@ -104,16 +112,16 @@ $('#names-1 :submit').on('click', function(){
 	if ($('#p1-name').val() !== "") {
 
 		player_1.name = $('#names-1 #p1-name').val().toLowerCase();
-		player_2.name = 'computer';
+		player_2.name = 'wallace';
 		player_2.ai = true;
 		
-		$('#player1-name').html(player_1.name);
-		$('#player2-name').html(player_2.name);
+		$('.player1-name').html(player_1.name);
+		$('.player2-name').html(player_2.name);
 		updateScore();
 
 		$('#names-1').delay(200).fadeOut(200);
-		$('#score').delay(400).fadeIn(200);
 		$('#'+board.game).delay(400).fadeIn(200);
+		toggleNames();
 	};
 });
 
@@ -138,13 +146,13 @@ $('#names-2 :submit').on('click', function(){
 		player_2.name = $('#names-2 #p2-name').val().toLowerCase();
 		player_2.ai = false;
 
-		$('#player1-name').html(player_1.name);
-		$('#player2-name').html(player_2.name);
+		$('.player1-name').html(player_1.name);
+		$('.player2-name').html(player_2.name);
 		updateScore();
 
 		$('#names-2').delay(200).fadeOut(200);
-		$('#score').delay(400).fadeIn(200);
 		$('#'+board.game).delay(400).fadeIn(200);
+		toggleNames();
 	};
 });
 
@@ -172,17 +180,54 @@ $('#menu-button a').on('click', function(){
 // Win screen options
 
 $('#play-again').on('click', function(){
-	$('.overlay-container').fadeOut(300);
+	$('#play-again span').fadeOut(200);
 	restartGame();
 });
 
-$('#different-game').on('click', function(){
-	$('.overlay-container').toggle();
+$('#settings-games').on('click', function(){
+	$('.overlay-container').fadeOut(200);
 	$('.board-wrap').hide();
-	$('#game-list').fadeIn(300);
+	$('#game-list').delay(200).fadeIn(300);
 });
 
+$('#settings-names').on('click', function(){
+	$(this).next('.dropdown').slideToggle(200);
+});
 
+$('#settings-players').on('click', function(){
+	$(this).next('.dropdown').slideToggle(200);
+});
 
+$('#change-1p').on('click', function(){
+	$('#settings-players').next('.dropdown').delay(100).slideToggle(200);	
+	changePlayers = 1;
+});
+$('#change-2p').on('click', function(){
+	$('#settings-players').next('.dropdown').delay(100).slideToggle(200);
+	changePlayers = 2;
+});
+		
 
+$('#save-settings').on('click', function(){
+	console.log('save');
+
+	player_1.name = $('#change-p1-name').val().toLowerCase();
+	player_2.name = $('#change-p2-name').val().toLowerCase();
+
+	if (changePlayers === 1){
+		player_2.ai = false;
+		player_2.name = 'wallace';
+
+	} else if (changePlayers === 2){
+		player_2.ai = true;
+	}
+
+	$('.player1-name').html(player_1.name);
+	$('.player2-name').html(player_2.name);
+	updateScore();
+	loadGame();
+	restartGame();
+	$('.overlay-container').delay(200).fadeOut(200);
+
+});
 
