@@ -486,6 +486,10 @@ function getAllPossibleWins(){
 };
 
 
-
+board.rows = 8;
+board.cols = 8;
+board.game = 'connect';
+loadGame()
+allWinningMoves.length
 
 
