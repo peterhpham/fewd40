@@ -36,14 +36,14 @@ $('#choose-tictac').on('click', function(){
 	loadGame();
 	
 
-	if(isNewGame === false){
+	// if(isNewGame === false){
 		$('#game-list').fadeOut(200);
 		$('#'+board.game).delay(200).fadeIn(200);
-	} else {
-		$('#game-list').fadeOut(200);
-		$('#choose-players').delay(600).fadeIn(200);
-		isNewGame = false;
-	}
+	// } else {
+		// $('#game-list').fadeOut(200);
+		// $('#choose-players').delay(600).fadeIn(200);
+		// isNewGame = false;
+	// }
 });
 
 $('#choose-connect').on('click', function(){
@@ -52,14 +52,14 @@ $('#choose-connect').on('click', function(){
 	board.game = 'connect';
 	loadGame();
 
-	if(isNewGame === false){
+	// if(isNewGame === false){
 		$('#game-list').fadeOut(200);
 		$('#'+board.game).delay(200).fadeIn(200);
-	} else {
-		$('#game-list').fadeOut(200);
-		$('#choose-players').delay(600).fadeIn(200);
-		isNewGame = false;
-	}
+	// } else {
+	// 	$('#game-list').fadeOut(200);
+	// 	$('#choose-players').delay(600).fadeIn(200);
+	// 	isNewGame = false;
+	// }
 });
 
 $('#choose-checkers').on('click', function(){

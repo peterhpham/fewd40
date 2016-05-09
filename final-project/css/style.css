@@ -364,6 +364,12 @@ ul {
 }
 
 
+.game-piece {
+	position: absolute;
+	background-color: red;
+	float: left;
+}
+
 
 input[type="text"]{
 	width: 90vw;

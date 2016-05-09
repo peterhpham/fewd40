@@ -75,6 +75,30 @@ Game Support Functions
 ////////////////////////////////////////////////////////////////////////////*/
 
 
+// function getClick (){
+
+	$('.click').on( 'click', function(){
+		var newPos = $(this).position();
+		var w = parseFloat($(this).outerWidth());
+		var h = parseFloat($(this).outerHeight());
+		var x = parseFloat(newPos.left);
+		var y = parseFloat(newPos.top);
+		console.log("h: "+h, " w: "+w, " x: "+x, " y: "+y);
+		console.log("");
+
+		$('#pieces').prepend('<div class="game-piece"></div>');
+		$('#pieces').children().first().css({
+			'width' : w,
+			'height' : h,
+			'left' : x,
+			'top' : x
+		})
+
+	});
+// }
+
+
+
 function compareMoves( key ) {
     return board.grid[ key ] == currentPlayer.id;
 };
